@@ -10,3 +10,4 @@ export const ADD_EXPENSE_TYPE = "ADD_EXPENSE_TYPE";
 
 export const GET_USERS = "GET_USERS";
 export const DELETE_USER = "DELETE_USER";
+export const SOFT_DELETE_USER = "SOFT_DELETE_USER";

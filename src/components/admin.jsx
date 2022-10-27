@@ -14,6 +14,7 @@ export default function Admin() {
 
   return (
     <div className="row">
+      
       <div className="col-3">
         <SideDashboard firstName={userInfo.userName} />
       </div>

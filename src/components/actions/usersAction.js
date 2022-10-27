@@ -32,6 +32,23 @@ export const getAllUsers = () => (dispatch) => {
 // };
 
 //soft delete
+export const softDeleteExpenseType = (id) => (dispatch, getState) => {
+  console.log("in delete expenseType:", id);
+  axios
+    .delete(apiEndPoint + "/" + id, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: actions.DELETE_EXPENSE_TYPE,
+        payload: {
+          deleteExpense: res.data,
+        },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};
 export const deleteExpenseType = (id) => (dispatch, getState) => {
   console.log("in delete expenseType:", id);
   axios
@@ -49,3 +66,4 @@ export const deleteExpenseType = (id) => (dispatch, getState) => {
     })
     .catch((err) => console.log(err.message));
 };
+

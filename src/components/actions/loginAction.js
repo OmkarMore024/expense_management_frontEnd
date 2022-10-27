@@ -27,10 +27,10 @@ export const loadLogin = () => ({
 
 export const removeLogin = () => {
   console.log("in action remove");
-  sessionStorage.setItem("token", "logout");
+  sessionStorage.setItem("token", "");
   return {
     type: actions.LOGOUT_USER,
-    payload: { token: sessionStorage.getItem("token") },
+    payload: { token: null },
   };
 };
 

@@ -9,6 +9,7 @@ import Register from "./components/register";
 import Login from "./components/login";
 import Home from "./components/home";
 import { Provider } from "react-redux";
+
 import store from "./store";
 import PrimaryUser from "./components/PrimaryUser";
 import Member from "./components/Members";
@@ -19,6 +20,9 @@ import ErrorPage from "./components/errorPage";
 import EditExpenseType from "./components/databaseComp/editExpenseType";
 import PeriodicExpense from "./components/databaseComp/periodicexpense";
 import DailyExpense from "./components/databaseComp/dailyexpense";
+import Protected from "./components/common/protectedRoute";
+import HouseHold from "./components/databaseComp/householdType";
+import Members from "./components/databaseComp/memberType";
 
 const router = createBrowserRouter([
   {
@@ -30,11 +34,9 @@ const router = createBrowserRouter([
       { path: "home", element: <Home /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
-      // { path: "primaryuser", element: <PrimaryUser /> },
-      { path: "members", element: <Member /> },
       {
         path: "admin",
-        element: <Admin />,
+        element: <Protected compo={<Admin />}></Protected>,
         errorElement: <ErrorPage />,
         children: [
           { index: true, element: <ExpenseType /> },
@@ -45,7 +47,19 @@ const router = createBrowserRouter([
       },
       {
         path: "primary-user",
-        element: <PrimaryUser />,
+        element: <Protected compo={<PrimaryUser />}></Protected>,
+        errorElement: <ErrorPage />,
+        children: [
+          { index: true, element: <PeriodicExpense /> },
+          { path: "periodicexpense", element: <PeriodicExpense /> },
+          { path: "dailyexpense", element: <DailyExpense /> },
+          { path: "members", element: <Members /> },
+          { path: "households", element: <HouseHold /> },
+        ],
+      },
+      {
+        path: "member",
+        element: <Protected compo={<Member />}></Protected>,
         errorElement: <ErrorPage />,
         children: [
           { index: true, element: <PeriodicExpense /> },
@@ -53,18 +67,7 @@ const router = createBrowserRouter([
           { path: "dailyexpense", element: <DailyExpense /> },
         ],
       },
-      // {
-      //   path: "admin",
-      //   element: (
-      //     <div>
-      //       <Admin />
-      //     </div>
-      //   ),
-      //   children: [
-      //     { path: "admin/expensetype", element: <ExpenseType /> },
-      //     { path: "admin/users", element: <Users /> },
-      //   ],
-      // },
+      
     ],
   },
 ]);

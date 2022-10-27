@@ -36,7 +36,7 @@ export default function NavBar() {
                   Login
                 </NavLink>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink to="/admin" className="nav-link">
                   admin
                 </NavLink>
@@ -50,7 +50,7 @@ export default function NavBar() {
                 <NavLink to="/members" className="nav-link">
                   Members
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

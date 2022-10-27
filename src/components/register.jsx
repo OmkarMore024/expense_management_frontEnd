@@ -40,7 +40,7 @@ export default function Register() {
 
   let onSubmitData = (data) => {
     //setting default primary user\
-    // data.role = "Primary User";
+
     data.updatedBy = "User";
     console.log(data);
     dispatch(registerUser(data));
@@ -171,8 +171,8 @@ export default function Register() {
                   <option value={"Primary User"} key={"22"}>
                     {"Primary-user"}
                   </option>
-                  <option value={"member"} key={"23"}>
-                    {"member"}
+                  <option value={"Member"} key={"23"}>
+                    {"Member"}
                   </option>
                 </select>
                 <p className="text-danger">{errors.role?.message}</p>

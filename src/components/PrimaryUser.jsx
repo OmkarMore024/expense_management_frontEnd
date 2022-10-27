@@ -12,6 +12,12 @@ export default function PrimaryUser() {
           <h4>in primary user</h4>
         </div>
         <nav className="nav border-bottom">
+          <NavLink className="navLinkTable" to="/primary-user/households">
+            Households
+          </NavLink>
+          <NavLink className="navLinkTable" to="/primary-user/members">
+            members
+          </NavLink>
           <NavLink className="navLinkTable" to="/primary-user/periodicexpense">
             Periodic expense
           </NavLink>

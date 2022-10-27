@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import React from "react";
+import React, { useEffect } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,20 +23,31 @@ export default function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const loginToken = useSelector((state) => state.loginReducer.token);
+  const userInfo = useSelector((state) => state.loginReducer.userInfo);
 
-  // const loginToken = useSelector((state) => state.loginReducer.token);
-
-  // console.log("in login.jsx" + loginToken);
+  useEffect(() => {
+    console.log("in login.jsx" );
+    console.log(userInfo);
+    if (userInfo) {
+      if (userInfo.role === "Admin") {
+        navigate("/admin");
+      } else if (userInfo.role === "Primary User") {
+        navigate("/primary-user");
+      } else if (userInfo.role === "Member") {
+        navigate("/member");
+      }
+    } else {
+      navigate("/login");
+    }
+  }, [userInfo, loginToken]);
 
   let onSubmitData = (data) => {
-    //setting default primary user\
-    // data.role = "Primary User";
-    console.log(data);
-    // console.log({ data });
+    // console.log(data);
 
     dispatch(loginUser(data));
-    navigate("/home");
+    // console.log("in submit", loginToken);
+    // navigate("/home");
     // reset();
   };
 

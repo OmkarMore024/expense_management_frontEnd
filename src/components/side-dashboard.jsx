@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 export default function SideDashboard(props) {
   const { handleClick, firstName } = props;
   const token = useSelector((state) => state.loginReducer.token);
+  const userInfo = useSelector((state) => state.loginReducer.userInfo);
+  console.log("in sideDashboard", userInfo);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,12 +25,13 @@ export default function SideDashboard(props) {
     console.log(token);
 
     dispatch(removeLogin());
+    // navigate("/login");
 
-    console.log("2====" + token);
-    if (token === "logout") {
-      console.log("in navigate login");
-      navigate("/login");
-    }
+    // console.log("2====" + token);
+    // if (token === "logout") {
+    //   console.log("in navigate login");
+    //   navigate("/login");
+    // }
   };
 
   return (
@@ -42,7 +45,7 @@ export default function SideDashboard(props) {
         <img src="images/avatar.png" className="user-img" />
 
         <div className="header-name">
-          <h5>Hello {firstName}</h5>
+          <h5>Hello {userInfo.userName}</h5>
           <span>Welcome Back</span>
         </div>
         <nav className="navDiv">

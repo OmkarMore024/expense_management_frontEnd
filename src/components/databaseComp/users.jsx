@@ -18,9 +18,9 @@ export default function Users() {
     dispatch(getAllUsers());
   }, []);
 
-  //   const handleDelete = (id) => {
-  //     dispatch(deleteExpenseType(id));
-  //   };
+    const handleDelete = (id) => {
+      // dispatch(deleteExpenseType(id));
+    };
 
   return (
     <div>
@@ -56,7 +56,7 @@ export default function Users() {
                     <MdOutlineModeEditOutline className="svg-round" />
                     <MdOutlineDelete
                       className="svg-round"
-                      //   onClick={() => handleDelete(user._id)}
+                        onClick={() => handleDelete(user._id)}
                     />
                   </div>
                 </td>
