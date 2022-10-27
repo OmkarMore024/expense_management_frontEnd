@@ -49,6 +49,7 @@ export const softDeleteExpenseType = (id) => (dispatch, getState) => {
     })
     .catch((err) => console.log(err.message));
 };
+
 export const deleteExpenseType = (id) => (dispatch, getState) => {
   console.log("in delete expenseType:", id);
   axios

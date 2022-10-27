@@ -1,3 +1,3 @@
 import * as actions from "../actions/actionTypes";
 
-export const dailyExpenseReducer = (state = { expenses: [] }, action) => {};
+export const dailyExpenseReducer = (state = { dailyExpenses: [] }, action) => {};

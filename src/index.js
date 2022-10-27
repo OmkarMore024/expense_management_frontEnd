@@ -23,6 +23,7 @@ import DailyExpense from "./components/databaseComp/dailyexpense";
 import Protected from "./components/common/protectedRoute";
 import HouseHold from "./components/databaseComp/householdType";
 import Members from "./components/databaseComp/memberType";
+import EditHouseHold from "./components/databaseComp/editHouseHold";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
           { path: "dailyexpense", element: <DailyExpense /> },
           { path: "members", element: <Members /> },
           { path: "households", element: <HouseHold /> },
+          {path:"households/addhousehold",element:<EditHouseHold/>}
         ],
       },
       {

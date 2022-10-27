@@ -13,5 +13,7 @@ export default combineReducers({
   loginReducer,
   expenseTypeReducer,
   userReducer,
+  houseHoldReducer,
+  memberReducer,
   // dailyExpenseReduc,
 });

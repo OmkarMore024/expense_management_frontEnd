@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addExpenseType } from "../actions/expenseTypeAction";
 
 export function expenseLoader({ params }) {
-  const genreId = params.genreId;
-  return genreId;
+  const expenseId = params.expenseId;
+  return expenseId;
 }
 
 export default function EditExpenseType() {

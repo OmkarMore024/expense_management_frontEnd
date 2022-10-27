@@ -13,7 +13,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 export default function ExpenseType() {
   const expenses = useSelector((state) => state.expenseTypeReducer.expenses);
   //   console.log(expenses);
-  const dispatch = useDispatch();
+const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllExpenseTypes());

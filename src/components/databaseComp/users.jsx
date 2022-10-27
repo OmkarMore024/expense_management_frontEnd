@@ -11,16 +11,17 @@ import { getAllUsers } from "../actions/usersAction";
 
 export default function Users() {
   const users = useSelector((state) => state.userReducer.users);
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllUsers());
   }, []);
 
-    const handleDelete = (id) => {
-      // dispatch(deleteExpenseType(id));
-    };
+  const handleDelete = (id) => {
+    console.log("in handle delete for user");
+    // dispatch(deleteExpenseType(id));
+  };
 
   return (
     <div>
@@ -56,7 +57,7 @@ export default function Users() {
                     <MdOutlineModeEditOutline className="svg-round" />
                     <MdOutlineDelete
                       className="svg-round"
-                        onClick={() => handleDelete(user._id)}
+                      onClick={() => handleDelete(user._id)}
                     />
                   </div>
                 </td>

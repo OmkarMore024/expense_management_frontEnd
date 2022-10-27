@@ -11,7 +11,7 @@ export default function SideDashboard(props) {
   const { handleClick, firstName } = props;
   const token = useSelector((state) => state.loginReducer.token);
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
-  console.log("in sideDashboard", userInfo);
+  // console.log("in sideDashboard", userInfo);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
