@@ -1,6 +1,9 @@
 import * as actions from "../actions/actionTypes";
 
-export const houseHoldReducer = (state = { houseHolds: [] }, action) => {
+export const houseHoldReducer = (
+  state = { houseHolds: [], currentHouseHold: {} },
+  action
+) => {
   switch (action.type) {
     case actions.GET_HOUSHOLDS:
       return {
@@ -14,10 +17,29 @@ export const houseHoldReducer = (state = { houseHolds: [] }, action) => {
         houseHolds: [...state.houseHolds, { ...action.payload.household }],
       };
 
+    case actions.UPDATE_HOUSHOLD:
+      console.log(action.payload.household);
+      state.houseHolds  = state.houseHolds.map((household) => {
+        if (household._id === action.payload.household._id) {
+          household = action.payload.household;
+        }
+        return household;
+      });
+      return {
+        ...state,
+        houseHolds: [...state.houseHolds],
+      };
+
     case actions.GET_PRIMARY_HOUSHOLDS:
       return {
         ...state,
         houseHolds: action.payload.households,
+      };
+
+    case actions.GET_HOUSEHOLD_BY_ID:
+      return {
+        ...state,
+        currentHouseHold: { ...action.payload.household },
       };
 
     default:

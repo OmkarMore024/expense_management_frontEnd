@@ -10,25 +10,24 @@ import {
   getCurrentHouseHold,
   updateHouseHold,
 } from "../actions/houseHoldAction";
+import { getCurrentUser, updateUser } from "../actions/usersAction";
 
-export function houseHoldLoader({ params }) {
-  const houseHoldId = params.houseHoldId;
-  console.log(houseHoldId);
-  return houseHoldId;
+export function userLoader({ params }) {
+  const userId = params.userId;
+  //   console.log(userId);
+  return userId;
 }
 
 const schema = yup.object().shape({
-  name: yup.string().min(3).max(20).required(),
-  addressLine1: yup.string().min(3).max(30).required(),
-  addressLine2: yup.string().min(3).max(30).required(),
-  area: yup.string().min(3).max(20).required(),
-  city: yup.string().min(3).max(20).required(),
-  state: yup.string().min(3).max(20).required(),
-  zipcode: yup.string().min(3).max(20).required(),
-  createdBy: yup.string(),
+  firstName: yup.string().min(5).max(50).required(),
+  lastName: yup.string().min(2).max(50).required(),
+  email: yup.string().min(5).max(255).required().email(),
+  phone: yup.string().min(7).max(10).required(),
+  userName: yup.string().min(5).max(100).required(),
+  isActive: yup.boolean().required(),
 });
 
-export default function EditHouseHold() {
+export default function EditUser() {
   const {
     register,
     handleSubmit,
@@ -40,38 +39,38 @@ export default function EditHouseHold() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-//   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
-  const household = useSelector(
-    (state) => state.houseHoldReducer.currentHouseHold
-  );
+  //   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
+  const user = useSelector((state) => state.userReducer.currentUser);
 
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
-  const houseHoldId = useLoaderData();
-//   console.log(houseHoldId);
+  const userId = useLoaderData();
+  //   console.log(houseHoldId);
 
   React.useEffect(() => {
-    if (!houseHoldId) return;
+    if (!userId) return;
 
-    dispatch(getCurrentHouseHold(houseHoldId));
+    dispatch(getCurrentUser(userId));
 
-    console.log("in edit household", household);
+    console.log("in edit user", user);
 
-    setValue("name", household.name);
-    setValue("state", household.state);
-    setValue("addressLine2", household.addressLine2);
-    setValue("addressLine1", household.addressLine1);
-    setValue("zipcode", household.zipcode);
-    setValue("city", household.city);
-    setValue("area", household.area);
-    setValue("_id", household._id);
-  }, [household._id]);
+    setValue("name", user.name);
+    setValue("firstName", user.firstName);
+    setValue("lastName", user.lastName);
+    setValue("email", user.email);
+    setValue("phone", user.phone);
+    setValue("userName", user.userName);
+    setValue("isActive", user.isActive);
+    setValue("_id", user._id);
+  }, [user._id]);
 
   let onSubmitData = (data) => {
     console.log(data);
     if (data._id) {
+      data.updatedBy = "Admin";
+      data.password = user.password;
       console.log("update");
-      dispatch(updateHouseHold(data));
-      navigate("/primary-user/households");
+      dispatch(updateUser(data));
+      navigate("/admin/users");
     } else {
       data.createdBy = userInfo._id;
       dispatch(addHouseHold(data));
@@ -89,108 +88,103 @@ export default function EditHouseHold() {
               <div className="col-6">
                 {" "}
                 <label htmlFor="expenseIn" className="m-2">
-                  Household-Name
+                  first-Name
                 </label>
                 <input
                   className="form-control m-2 bar"
                   type={"text"}
-                  placeholder="Enter houdehold name"
-                  {...register("name")}
+                  placeholder="Enter houdehold firstName"
+                  {...register("firstName")}
                   id="expenseIn"
                   required
                 />
-                <p>{errors.name?.message}</p>
+                <p>{errors.firstName?.message}</p>
               </div>
               <div className="col-6">
                 {" "}
                 <label htmlFor="addressline1" className="m-2">
-                  Addressline-1
+                  last-name
                 </label>
                 <input
                   className="form-control m-2 bar"
                   type={"text"}
                   placeholder="Enter addressline name"
-                  {...register("addressLine1")}
-                  id="addressline1"
+                  {...register("lastName")}
+                  id="lastName"
                   required
                 />
-                <p>{errors.addressLine1?.message}</p>
+                <p>{errors.lastName?.message}</p>
               </div>
             </div>
             <div className="row">
               <div className="col-6">
-                <label htmlFor="addressLine2" className="m-2">
-                  Addressline-2
+                <label htmlFor="email2" className="m-2">
+                  email{" "}
                 </label>
                 <input
                   className="form-control m-2 bar"
-                  type={"text"}
-                  placeholder="Enter addressline-2 "
-                  {...register("addressLine2")}
-                  id="addressLine2"
+                  type={"email"}
+                  placeholder="Enter email-2 "
+                  {...register("email")}
+                  id="email2"
                   required
                 />
-                <p>{errors.addressLine2?.message}</p>
+                <p>{errors.email?.message}</p>
               </div>
               <div className="col-6">
-                <label htmlFor="area" className="m-2">
-                  Area
+                <label htmlFor="phone" className="m-2">
+                  phone
                 </label>
                 <input
                   className="form-control m-2 bar"
                   type={"text"}
-                  placeholder="Enter area name"
-                  {...register("area")}
-                  id="area"
+                  placeholder="Enter phone name"
+                  {...register("phone")}
+                  id="phone"
                   required
                 />
-                <p>{errors.area?.message}</p>
+                <p>{errors.phone?.message}</p>
               </div>
             </div>
             <div className="row">
               <div className="col-6">
                 <label htmlFor="state" className="m-2">
-                  state
+                  userName
                 </label>
                 <input
                   className="form-control m-2 bar"
                   type={"text"}
-                  placeholder="Enter state name"
-                  {...register("state")}
-                  id="state"
+                  placeholder="Enter userName name"
+                  {...register("userName")}
+                  id="userName"
                   required
                 />
-                <p>{errors.state?.message}</p>
+                <p>{errors.userName?.message}</p>
               </div>
               <div className="col-6">
-                <label htmlFor="zipcode" className="m-2">
-                  zipcode
-                </label>
-                <input
+                {/* <input
                   className="form-control m-2 bar"
-                  type={"text"}
-                  placeholder="Enter zipcode"
-                  {...register("zipcode")}
+                  type={"checkbox"}
+                  //   placeholder="Enter zipcode"
+                  value={true}
                   id="zipcode"
                   required
+                /> */}
+                <input
+                  className="form-check-input  m-2 bar"
+                  type="checkbox"
+                  value={true}
+                  {...register("isActive")} //   checked={getMovie(movieId).liked}
+                  id="flexCheckDefault"
                 />
-                <p>{errors.zipcode?.message}</p>
+
+                <label className="form-check-label" htmlFor="flexCheckDefault">
+                  isActive?
+                </label>
+                <p>{errors.isActive?.message}</p>
               </div>
             </div>
-            <div className="col-6">
-              <label htmlFor="city" className="m-2">
-                city
-              </label>
-              <input
-                className="form-control m-2 bar"
-                type={"text"}
-                placeholder="Enter addressline name"
-                {...register("city")}
-                id="city"
-                required
-              />
-              <p>{errors.city?.message}</p>
-            </div>
+
             <div className="row py-3 ">
               <div className="col-6">
                 <button type="submit" className="btn btn-light m-2 ">

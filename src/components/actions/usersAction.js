@@ -68,3 +68,35 @@ export const deleteExpenseType = (id) => (dispatch, getState) => {
     .catch((err) => console.log(err.message));
 };
 
+export const getCurrentUser = (id) => (dispatch, getState) => {
+  //   console.log(id);
+    axios
+      .get(apiEndPoint + `/${id}`)
+      .then((response) => {
+      //   console.log(response.data);
+        return dispatch({
+          type: actions.GET_USER_BY_ID,
+          payload: { user: response.data },
+        });
+      })
+      .catch((err) => console.log(err.message));
+  };
+  
+  export const updateUser = (data) => (dispatch, getState) => {
+    //   console.log(data);
+      axios
+        .put(apiEndPoint + `/${data._id}`,data,{
+          headers: { "x-auth-token": getState().loginReducer.token },
+        })
+        .then((response) => {
+        //   console.log(response.data);
+          return dispatch({
+            type: actions.UPDATE_USER,
+            payload: { user: response.data },
+          });
+        })
+        .catch((err) => console.log(err.message));
+    };
+    
+
+

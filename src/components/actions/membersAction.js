@@ -7,7 +7,24 @@ export const getAllMembers = () => (dispatch) => {
   axios
     .get(apiEndPoint)
     .then((response) => {
-      console.log(response.data);
+      //   console.log(response.data);
+      return dispatch({
+        type: actions.GET_MEMBERS,
+        payload: { members: response.data },
+      });
+    })
+    .catch((err) => console.log(err.message));
+  //   console.log(user);
+  //   console.log(apiEndPoint);
+};
+
+export const getAllMembersBypfs = (data) => (dispatch, getState) => {
+  axios
+    .post(apiEndPoint + `/pfs`, data, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((response) => {
+      //   console.log(response.data);
       return dispatch({
         type: actions.GET_MEMBERS,
         payload: { members: response.data },
@@ -19,7 +36,7 @@ export const getAllMembers = () => (dispatch) => {
 };
 
 export const getHouseHoldmembers = (houseHoldId) => (dispatch, getState) => {
-    console.log(houseHoldId);
+  console.log(houseHoldId);
   axios
     .post(
       apiEndPoint + "/getHouseHoldMembers",
@@ -52,6 +69,23 @@ export const deleteHouseHoldMember = (id) => (dispatch, getState) => {
         type: actions.DELETE_MEMBER,
         payload: {
           deleteMember: res.data,
+        },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};
+
+export const addMember = (data) => (dispatch, getState) => {
+  axios
+    .post(apiEndPoint, data, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((res) => {
+      //   console.log(res.data);
+      dispatch({
+        type: actions.ADD_MEMBER,
+        payload: {
+          member: res.data,
         },
       });
     })

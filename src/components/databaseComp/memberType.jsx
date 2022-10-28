@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
 import {
   deleteHouseHoldMember,
   getAllMembers,
+  getAllMembersBypfs,
   getHouseHoldmembers,
 } from "../actions/membersAction";
 
@@ -15,6 +16,7 @@ export default function Members() {
   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
   const members = useSelector((state) => state.memberReducer.members);
+  const [houseHoldName, setHouseHoldName] = useState("");
 
   //   console.log("in members check:", members);
   const dispatch = useDispatch();
@@ -26,15 +28,19 @@ export default function Members() {
 
   useEffect(() => {
     dispatch(getPrimarysHouseHolds(userInfo._id));
-    dispatch(getAllMembers());
+    dispatch(getAllMembersBypfs({ houseHoldName }));
     // households.map((houseHold) => {
     //   console.log("---", houseHold._id);
     //   dispatch(getHouseHoldmembers(houseHold._id));
     //   newArr.push(households);
     // });
-    
-  }, []);
-  console.log("in sss", newArr);
+  }, [members]);
+  //   console.log("in sss", newArr);
+  const handleSearch = ({ target }) => {
+    console.log(target.value);
+    setHouseHoldName(target.value);
+    dispatch(getAllMembersBypfs({ houseHoldName }));
+  };
 
   //   useEffect(() => {}, []);
 
@@ -46,10 +52,11 @@ export default function Members() {
             type={"text"}
             placeholder="Search"
             className="shadow px-2 py-1 my-3 bg-body rounded"
+            onChange={handleSearch}
           />
         </div>
         <div className="col-6 symDiv">
-          <Link to="/admin/expensetype/addExpenseType">
+          <Link to="/primary-user/members/addmember">
             <MdAddCircle className="addSym my-3" />
           </Link>
         </div>

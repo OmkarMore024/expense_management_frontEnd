@@ -18,7 +18,6 @@ export default function HouseHold() {
     // dispatch(getAllHouseHolds());
     dispatch(getPrimarysHouseHolds(userInfo._id));
   }, []);
-
   return (
     <div>
       <div className="row">
@@ -52,7 +51,9 @@ export default function HouseHold() {
                 </td>
                 <td>
                   <div>
-                    <MdOutlineModeEditOutline className="svg-round" />
+                    <Link to={`/primary-user/households/${household._id}`}>
+                      <MdOutlineModeEditOutline className="svg-round" />
+                    </Link>
                     <MdOutlineDelete
                       className="svg-round"
                       //   onClick={() => handleDelete(household._id)}

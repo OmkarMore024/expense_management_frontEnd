@@ -8,6 +8,7 @@ import {
 } from "../actions/expenseTypeAction";
 import { MdAddCircle } from "react-icons/md";
 import { getAllUsers } from "../actions/usersAction";
+import { Link } from "react-router-dom";
 
 export default function Users() {
   const users = useSelector((state) => state.userReducer.users);
@@ -41,6 +42,7 @@ export default function Users() {
         <thead>
           <tr className="" key={"search and action"}>
             <th className="">Expense Type</th>
+            <th className="">Role</th>
             <th className="">Action</th>
             {/* <th className="w-1/4 ...">Views</th> */}
           </tr>
@@ -52,9 +54,12 @@ export default function Users() {
                 <td>
                   {index + 1} {user.firstName} {user.lastName}
                 </td>
+                <td>{user.role}</td>
                 <td>
                   <div>
-                    <MdOutlineModeEditOutline className="svg-round" />
+                    <Link to={`/admin/users/${user._id}`}>
+                      <MdOutlineModeEditOutline className="svg-round" />
+                    </Link>
                     <MdOutlineDelete
                       className="svg-round"
                       onClick={() => handleDelete(user._id)}

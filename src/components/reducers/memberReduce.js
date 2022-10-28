@@ -11,10 +11,16 @@ export const memberReducer = (state = { members: [] }, action) => {
     case actions.GET_HOUSEHOLD_MEMBERS:
       let newArr2 = [];
       newArr2.push(action.payload.members);
-       console.log(newArr2);
+      console.log(newArr2);
       return {
         ...state,
         members: action.payload.members,
+      };
+
+    case actions.ADD_MEMBER:
+      return {
+        ...state,
+        members: [...state.members, { ...action.payload.member }],
       };
 
     case actions.DELETE_MEMBER:
