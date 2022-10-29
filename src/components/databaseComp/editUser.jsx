@@ -7,8 +7,6 @@ import { Navigate, useLoaderData, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addHouseHold,
-  getCurrentHouseHold,
-  updateHouseHold,
 } from "../actions/houseHoldAction";
 import { getCurrentUser, updateUser } from "../actions/usersAction";
 
@@ -162,26 +160,24 @@ export default function EditUser() {
                 <p>{errors.userName?.message}</p>
               </div>
               <div className="col-6">
-                {/* <input
-                  className="form-control m-2 bar"
-                  type={"checkbox"}
-                  //   placeholder="Enter zipcode"
-                  value={true}
-                  id="zipcode"
-                  required
-                /> */}
-                <input
-                  className="form-check-input  m-2 bar"
-                  type="checkbox"
-                  value={true}
-                  {...register("isActive")} //   checked={getMovie(movieId).liked}
-                  id="flexCheckDefault"
-                />
+                <div className="isActive-block">
+                  <input
+                    className="form-check-input  m-2 bar"
+                    type="checkbox"
+                    value={true}
+                    {...register("isActive")}
+                    checked={user.isActive}
+                    id="flexCheckDefault"
+                  />
 
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                  isActive?
-                </label>
-                <p>{errors.isActive?.message}</p>
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefault"
+                  >
+                    isActive?
+                  </label>
+                  <p>{errors.isActive?.message}</p>
+                </div>
               </div>
             </div>
 

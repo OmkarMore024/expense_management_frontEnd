@@ -55,7 +55,7 @@ span a {
 /* side-dash board css */
 .side-dashboard {
   width: 218px;
-  height: 700px;
+  height: 100%;
 }
 
 .logo {
@@ -69,7 +69,7 @@ span a {
 .bg-color {
   position: relative;
   width: 100%;
-  height: 604px;
+  height: 100%;
   border-radius: 8px 8px 0 0;
   background-color: #3f7bda;
 }
@@ -195,6 +195,13 @@ tr th {
 .household .btn:hover {
   background-color: #00d47a;
   color: white;
+}
+.isActive-block {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* .navLink {

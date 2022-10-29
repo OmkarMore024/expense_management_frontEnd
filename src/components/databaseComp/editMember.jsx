@@ -60,7 +60,7 @@ export default function EditMember() {
     if (data._id) {
       console.log("update");
       // dispatch(updateexpense(data));
-      navigate("/expenses");
+      navigate("/primary-user/members");
     } else {
       dispatch(addMember(data));
       navigate("/primary-user/members");

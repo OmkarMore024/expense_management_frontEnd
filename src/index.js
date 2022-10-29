@@ -23,9 +23,15 @@ import DailyExpense from "./components/databaseComp/dailyexpense";
 import Protected from "./components/common/protectedRoute";
 import HouseHold from "./components/databaseComp/householdType";
 import Members from "./components/databaseComp/memberType";
-import EditHouseHold, { houseHoldLoader } from "./components/databaseComp/editHouseHold";
+import EditHouseHold, {
+  houseHoldLoader,
+} from "./components/databaseComp/editHouseHold";
 import EditMember from "./components/databaseComp/editMember";
 import EditUser, { userLoader } from "./components/databaseComp/editUser";
+import EditPeriodicPayment from "./components/databaseComp/editPeriodicPayment";
+import UpdatePeriodicPayment, {
+  periodicPaymentLoader,
+} from "./components/databaseComp/updatePeriodicPayment";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +52,7 @@ const router = createBrowserRouter([
           { path: "expensetype", element: <ExpenseType /> },
           { path: "expensetype/addExpenseType", element: <EditExpenseType /> },
           { path: "users", element: <Users /> },
-          { path: "users/:userId", element: <EditUser /> ,loader:userLoader},
+          { path: "users/:userId", element: <EditUser />, loader: userLoader },
         ],
       },
       {
@@ -56,12 +62,25 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <PeriodicExpense /> },
           { path: "periodicexpense", element: <PeriodicExpense /> },
+          {
+            path: "periodicexpense/addperiodicexpenses",
+            element: <EditPeriodicPayment />,
+          },
+          {
+            path: "periodicexpense/:periodicPaymentId",
+            element: <UpdatePeriodicPayment />,
+            loader: periodicPaymentLoader,
+          },
           { path: "dailyexpense", element: <DailyExpense /> },
           { path: "members", element: <Members /> },
-          {path:"members/addmember",element:<EditMember/>},
+          { path: "members/addmember", element: <EditMember /> },
           { path: "households", element: <HouseHold /> },
-          {path:"households/addhousehold",element:<EditHouseHold/>},
-          {path:"households/:houseHoldId",element:<EditHouseHold/>,loader:houseHoldLoader},
+          { path: "households/addhousehold", element: <EditHouseHold /> },
+          {
+            path: "households/:houseHoldId",
+            element: <EditHouseHold />,
+            loader: houseHoldLoader,
+          },
         ],
       },
       {
@@ -74,7 +93,6 @@ const router = createBrowserRouter([
           { path: "dailyexpense", element: <DailyExpense /> },
         ],
       },
-      
     ],
   },
 ]);

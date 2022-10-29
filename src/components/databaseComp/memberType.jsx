@@ -27,14 +27,14 @@ export default function Members() {
   let newArr = [];
 
   useEffect(() => {
-    dispatch(getPrimarysHouseHolds(userInfo._id));
+    // dispatch(getPrimarysHouseHolds(userInfo._id));
     dispatch(getAllMembersBypfs({ houseHoldName }));
     // households.map((houseHold) => {
     //   console.log("---", houseHold._id);
     //   dispatch(getHouseHoldmembers(houseHold._id));
     //   newArr.push(households);
     // });
-  }, [members]);
+  }, []);
   //   console.log("in sss", newArr);
   const handleSearch = ({ target }) => {
     console.log(target.value);
