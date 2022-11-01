@@ -3,11 +3,12 @@ import * as actions from "./actionTypes";
 
 const apiEndPoint = "http://localhost:3111/api/" + "expensetypes";
 
-export const getAllExpenseTypes = () => (dispatch) => {
+export const getAllExpenseTypes = (titleName) => (dispatch, getState) => {
   axios
-    .get(apiEndPoint)
+    .post(apiEndPoint + "/pfs", titleName, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
     .then((res) => {
-      //   console.log(res.data);
       dispatch({
         type: actions.GET_EXPENSE_TYPES,
         payload: { expenses: res.data },
@@ -15,6 +16,8 @@ export const getAllExpenseTypes = () => (dispatch) => {
     })
     .catch((err) => console.log(err.message));
 };
+
+// get it by pfs
 
 export const addExpenseType = (data) => (dispatch, getState) => {
   console.log(data);

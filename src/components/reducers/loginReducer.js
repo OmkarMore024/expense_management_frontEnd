@@ -17,6 +17,7 @@ export const loginReducer = (state = { token: "", userInfo: {} }, action) => {
       return {
         ...state,
         token: action.payload.token,
+        userInfo: {},
       };
 
     default:

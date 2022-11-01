@@ -58,13 +58,13 @@ export default function EditExpenseType() {
   };
   return (
     <div>
-      <div className="expense justify-content-center align-items-center">
+      <div className="household justify-content-center align-items-center">
         <form onSubmit={handleSubmit(onSubmitData)}>
-          {/* <h4>in add expense page</h4> */}
+          <h4 className="household-title">Add Expense type</h4>
 
           <div className="addexpense">
             <label htmlFor="expenseIn" className="m-2">
-              expense-Name
+              Expense-Name
             </label>
             <input
               className="form-control m-2 bar"

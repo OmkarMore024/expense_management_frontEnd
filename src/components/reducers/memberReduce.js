@@ -1,6 +1,9 @@
 import * as actions from "../actions/actionTypes";
 
-export const memberReducer = (state = { members: [] }, action) => {
+export const memberReducer = (
+  state = { members: [], houseHolds: [] },
+  action
+) => {
   switch (action.type) {
     case actions.GET_MEMBERS:
       return {
@@ -29,10 +32,18 @@ export const memberReducer = (state = { members: [] }, action) => {
         return e._id !== action.payload.deleteMember._id;
       });
       //   console.log(newArr);
-
       return {
         ...state,
         members: newArr,
+      };
+    //this case is gor member dashboard
+    case actions.GET_HOUSEHOLD_MEMBER_BY_ID:
+      let househ = [];
+      // newArr2.push(action.payload.houseHolds);
+      // console.log(newArr2);
+      return {
+        ...state,
+        houseHolds: action.payload.houseHolds,
       };
 
     default:

@@ -84,7 +84,7 @@ export default function EditHouseHold() {
       <div className="household justify-content-center align-items-center m-2">
         <form onSubmit={handleSubmit(onSubmitData)}>
           <div className="addHousehold">
-            <h3 className="household-title">Add New HouseHold</h3>
+            <h3 className="household-title">Update user profile</h3>
             <div className="row">
               <div className="col-6">
                 {" "}

@@ -53,7 +53,7 @@ export default function EditPeriodicPayment() {
   //     setValue("state", households.state);
   //     setValue("_id", household._id);
   //   }, [household._id]);
-  const frequency = ["yearly", "monthly", "weekly", "daily"];
+  const frequency = ["yearly", "monthly", "weekly"];
 
   let onSubmitData = (data) => {
     // data.payment = { fdfdd: data.frequency };
@@ -77,7 +77,7 @@ export default function EditPeriodicPayment() {
             <h3 className="household-title">Add New Periodic Payment</h3>
             <div className="row">
               <div className="col-6">
-                {" "}
+               
                 <label htmlFor="addressline1" className="m-2">
                   choose household
                 </label>

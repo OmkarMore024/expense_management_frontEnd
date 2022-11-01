@@ -10,7 +10,9 @@ export default function Member() {
         </div>
         <div className="col-9">
           <div>
-            <h4>in member user</h4>
+          <h5>
+            <i>Members DashBoard</i>
+          </h5>
           </div>
           <nav className="nav border-bottom">
             <NavLink className="navLinkTable" to="/member/periodicexpense">

@@ -13,9 +13,14 @@ import {
 } from "../actions/membersAction";
 
 export default function Members() {
-  const households = useSelector((state) => state.houseHoldReducer.houseHolds);
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
+
+  const households = useSelector((state) => state.houseHoldReducer.houseHolds);
+ 
   const members = useSelector((state) => state.memberReducer.members);
+  const houseHoldFromMember = useSelector(
+    (state) => state.memberReducer.houseHolds
+  );
   const [houseHoldName, setHouseHoldName] = useState("");
 
   //   console.log("in members check:", members);
@@ -24,22 +29,37 @@ export default function Members() {
   const handleDelete = (id) => {
     dispatch(deleteHouseHoldMember(id));
   };
-  let newArr = [];
+
+  //for getting the memebers for that pert
+  let membersNewArr = [];
+  function getMembersInFrontEnd() {
+    households.map((hh) => {
+      members.forEach((mem) => {
+        if (hh._id === mem.houseHold._id) {
+          membersNewArr.push(mem);
+        }
+      });
+    });
+  }
+  getMembersInFrontEnd();
 
   useEffect(() => {
-    // dispatch(getPrimarysHouseHolds(userInfo._id));
+    dispatch(getPrimarysHouseHolds(userInfo._id));
+    // console.log(households);
     dispatch(getAllMembersBypfs({ houseHoldName }));
-    // households.map((houseHold) => {
-    //   console.log("---", houseHold._id);
-    //   dispatch(getHouseHoldmembers(houseHold._id));
-    //   newArr.push(households);
-    // });
+
+    
   }, []);
-  //   console.log("in sss", newArr);
+  
   const handleSearch = ({ target }) => {
     console.log(target.value);
     setHouseHoldName(target.value);
     dispatch(getAllMembersBypfs({ houseHoldName }));
+    // households.map((houseHold) => {
+    //   console.log("---", houseHold._id);
+    //   dispatch(getHouseHoldmembers(houseHold._id));
+    //   membersNewArr.push(households);
+    // });
   };
 
   //   useEffect(() => {}, []);
@@ -71,7 +91,7 @@ export default function Members() {
           </tr>
         </thead>
         <tbody>
-          {members.map((member, index) => {
+          {membersNewArr.map((member, index) => {
             return (
               <tr key={member._id}>
                 <td>

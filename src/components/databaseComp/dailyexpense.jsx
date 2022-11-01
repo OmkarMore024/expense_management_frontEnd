@@ -1,7 +1,125 @@
+import { useEffect } from "react";
+import {
+  deleteDailyExpense,
+  getAllDailyExpenses,
+} from "../actions/dailyExpenseAction";
+import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+import { MdAddCircle } from "react-icons/md";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
+import { getHouseHoldByMemberid } from "../actions/membersAction";
+
 export default function DailyExpense() {
+  const dailyExpenses = useSelector(
+    (state) => state.dailyExpenseReducer.dailyExpenses
+  );
+
+  const userInfo = useSelector((state) => state.loginReducer.userInfo);
+  const households = useSelector((state) => state.houseHoldReducer.houseHolds);
+  let memberHouseHold = useSelector((state) => state.memberReducer.houseHolds);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllDailyExpenses());
+
+    if (userInfo.role === "Member") {
+      dispatch(getHouseHoldByMemberid(userInfo._id));
+      // households = [...memberHouseHold];
+    } else if (userInfo.role === "Primary User") {
+      dispatch(getPrimarysHouseHolds(userInfo._id));
+    }
+  }, []);
+
+  // console.log(dailyExpenses);
+  // console.log(households);
+
+  let newArr = [];
+  function getDailyExpensesInFrontEnd() {
+    if (userInfo.role === "Member") {
+      memberHouseHold.map((hh) => {
+        dailyExpenses.forEach((pd) => {
+          if (hh.houseHold._id === pd.household._id) {
+            newArr.push(pd);
+          }
+        });
+      });
+    } else {
+      households.map((hh) => {
+        // console.log(dailyExpenses);
+        dailyExpenses.forEach((pd) => {
+          if (hh._id === pd.household._id) {
+            // console.log(pd);
+            newArr.push(pd);
+          }
+        });
+      });
+    }
+  }
+  getDailyExpensesInFrontEnd();
+  // console.log(newArr);
+
+  const handleDelete = (id) => {
+    dispatch(deleteDailyExpense(id));
+  };
   return (
     <div>
-      <h4>in daily expenses</h4>
+      <div className="row">
+        <div className="col-6 searchBox">
+          <input
+            type={"text"}
+            placeholder="Search"
+            className="shadow px-2 py-1 my-3 bg-body rounded"
+          />
+        </div>
+        <div className="col-6 symDiv">
+          <Link to="/primary-user/dailyexpense/adddailyexpense">
+            <MdAddCircle className="addSym my-3" />
+          </Link>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr className="" key={"search and action"}>
+            <th className="">PaidDate</th>
+            <th className="">Expense type</th>
+            <th className="">HouseHold</th>
+            <th className="">Amount</th>
+            <th className="">Action</th>
+            {/* <th className="w-1/4 ...">Views</th> */}
+          </tr>
+        </thead>
+        <tbody>
+          {newArr.map((dailyExpense, index) => {
+            return (
+              <tr key={dailyExpense._id}>
+                <td>
+                  {index + 1})
+                  {new Date(
+                    dailyExpense.paymentDetails.date
+                  ).toLocaleDateString()}
+                </td>
+                <td>{dailyExpense.expensetype.name}</td>
+                <td>{dailyExpense.household.name}</td>
+                <td>₹ {dailyExpense.paymentDetails.amount}</td>
+                <td>
+                  <div>
+                    <Link to={`/primary-user/dailyexpense/${dailyExpense._id}`}>
+                      <MdOutlineModeEditOutline className="svg-round" />
+                    </Link>
+                    <MdOutlineDelete
+                      className="svg-round"
+                      onClick={() => handleDelete(dailyExpense._id)}
+                    />
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }

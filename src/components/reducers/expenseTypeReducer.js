@@ -3,6 +3,7 @@ import * as actions from "../actions/actionTypes";
 export const expenseTypeReducer = (state = { expenses: [] }, action) => {
   switch (action.type) {
     case actions.GET_EXPENSE_TYPES:
+      console.log("checking", action.payload.expenses);
       return { ...state, expenses: action.payload.expenses };
 
     case actions.ADD_EXPENSE_TYPE:

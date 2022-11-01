@@ -11,6 +11,8 @@ import {
   getCurrentPeriodicExpense,
   updatePeriodicPayment,
 } from "../actions/paymentDetailsAction";
+import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
+import { addDaliyExpense } from "../actions/dailyExpenseAction";
 
 export function periodicPaymentLoader({ params }) {
   const periodicPaymentId = params.periodicPaymentId;
@@ -19,17 +21,19 @@ export function periodicPaymentLoader({ params }) {
 
 const schema = yup.object().shape({
   //   paymentDetails: {
+  householdId: yup.string().min(3).max(30).required(),
+  expensetypeId: yup.string().min(3).max(30).required(),
   amount: yup.number(),
   date: yup.date(),
   method: yup.string().min(3).max(20),
-
   paidThrough: yup.string().min(3).max(30).required(),
-  paidBy: yup.string().min(3).max(300).required(),
-  dueDate: yup.date().required(),
+  paidBy: yup.string().min(3).max(30).required(),
+  description: yup.string().min(3).max(300).required(),
+
   //   amount: yup.number().required(),
 });
 
-export default function UpdatePeriodicPayment() {
+export default function EditDailyExpenses() {
   const {
     register,
     handleSubmit,
@@ -44,6 +48,7 @@ export default function UpdatePeriodicPayment() {
   const periodicPayment = useSelector(
     (state) => state.paymentDetailsReducer.currentPayment
   );
+  const households = useSelector((state) => state.houseHoldReducer.houseHolds);
   const expenses = useSelector((state) => state.expenseTypeReducer.expenses);
   const members = useSelector((state) => state.userReducer.users);
 
@@ -55,13 +60,13 @@ export default function UpdatePeriodicPayment() {
   useEffect(() => {
     // dispatch(getAllMembers());
     // dispatch(getAllUsers());
-    // dispatch(getPrimarysHouseHolds(userInfo._id));
-    // dispatch(getAllExpenseTypes());
+    dispatch(getPrimarysHouseHolds(userInfo._id));
+    dispatch(getAllExpenseTypes());
   }, []);
 
   useEffect(() => {
     if (!periodicPaymentId) return;
-    dispatch(getCurrentPeriodicExpense(periodicPaymentId));
+    // dispatch(getCurrentPeriodicExpense(periodicPaymentId));
 
     setValue("dueDate", periodicPayment.dueDate);
     // setValue("amount", periodicPayment.paymentDetails.amount);
@@ -78,10 +83,6 @@ export default function UpdatePeriodicPayment() {
       date: data.date,
       method: data.method,
     };
-
-    // data["paymentDetails.amount"] =;
-    // data["paymentDetails.date"] =data.date;
-    // data["paymentDetails.method"] =data.method;
     delete data.amount;
     delete data.date;
     delete data.method;
@@ -89,9 +90,11 @@ export default function UpdatePeriodicPayment() {
     if (data._id) {
       console.log("update");
       dispatch(updatePeriodicPayment(data));
-      navigate("/primary-user/periodicexpense");
+      navigate("/primary-user/dailyexpense");
     } else {
       console.log("add");
+      dispatch(addDaliyExpense(data));
+      navigate("/primary-user/dailyexpense");
     }
   };
   return (
@@ -99,7 +102,48 @@ export default function UpdatePeriodicPayment() {
       <div className="household justify-content-center align-items-center m-2">
         <form onSubmit={handleSubmit(onSubmitData)}>
           <div className="addHousehold">
-            <h3 className="household-title">Pay/update Periodic Payment</h3>
+            <h3 className="household-title">Add/update daily Expense</h3>
+            <div className="row">
+              <div className="col-6">
+                <label htmlFor="addressline1" className="m-2">
+                  Choose household
+                </label>
+                <select
+                  className="form-select m-2"
+                  aria-label="Default select example"
+                  {...register("householdId")}
+                >
+                  <option value={"all"}>select</option>
+                  {households.map((household) => {
+                    return (
+                      <option value={household._id} key={household._id}>
+                        {household.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="col-6">
+                <label htmlFor="expenseIn" className="m-2">
+                  Expense-Name
+                </label>
+                <select
+                  className="form-select m-2"
+                  aria-label="Default select example"
+                  {...register("expensetypeId")}
+                >
+                  <option value={"all"}>select</option>
+                  {expenses.map((expenses) => {
+                    return (
+                      <option value={expenses._id} key={expenses._id}>
+                        {expenses.name}
+                      </option>
+                    );
+                  })}
+                </select>
+                <p>{errors.name?.message}</p>
+              </div>
+            </div>
             <div className="row">
               <div className="col-6">
                 <label htmlFor="datePayment" className="m-2">
@@ -121,7 +165,7 @@ export default function UpdatePeriodicPayment() {
                 <input
                   className="form-control m-2 bar"
                   type={"text"}
-                  placeholder="Enter method ex.netbanking,cash,check"
+                  placeholder="Enter method name"
                   {...register("method")}
                   id="method"
                   required
@@ -167,7 +211,7 @@ export default function UpdatePeriodicPayment() {
                 <input
                   className="form-control m-2 bar"
                   type={"text"}
-                  placeholder="Enter paidThrough bank"
+                  placeholder="Enter paidThrough"
                   {...register("paidThrough")}
                   id="paidThrough"
                   required
@@ -175,17 +219,18 @@ export default function UpdatePeriodicPayment() {
                 <p>{errors.paidThrough?.message}</p>
               </div>
               <div className="col-6">
-                <label htmlFor="date" className="m-2">
-                  Next payment date
+                <label htmlFor="description" className="m-2">
+                  description
                 </label>
                 <input
                   className="form-control m-2 bar"
-                  type={"date"}
-                  placeholder="Enter date"
-                  {...register("dueDate")}
-                  id="date"
+                  type={"text"}
+                  placeholder="Enter description name"
+                  {...register("description")}
+                  id="description"
                   required
                 />
+                <p>{errors.description?.message}</p>
               </div>
             </div>
 

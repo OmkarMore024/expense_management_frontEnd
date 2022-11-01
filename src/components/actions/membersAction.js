@@ -91,3 +91,21 @@ export const addMember = (data) => (dispatch, getState) => {
     })
     .catch((err) => console.log(err.message));
 };
+
+//this for member dahsboard
+export const getHouseHoldByMemberid = (id) => (dispatch, getState) => {
+  axios
+    .get(apiEndPoint + `/getHouseHoldsForMember/${id}`, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((res) => {
+      //   console.log(res.data);
+      dispatch({
+        type: actions.GET_HOUSEHOLD_MEMBER_BY_ID,
+        payload: {
+          houseHolds: res.data,
+        },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};

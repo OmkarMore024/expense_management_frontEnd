@@ -3,6 +3,10 @@
   /* background-color: rgb(250, 250, 250); */
   /* font-family: sans-serif; */
 }
+#register,
+#login {
+  background-color: rgb(250, 250, 250);
+}
 #register form,
 #login form {
   width: 300px;
@@ -56,6 +60,7 @@ span a {
 .side-dashboard {
   width: 218px;
   height: 100%;
+  background-color: rgb(250, 250, 250);
 }
 
 .logo {
@@ -202,6 +207,12 @@ tr th {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.household-title {
+  font-family: monospace;
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 2px solid #017dda;
 }
 
 /* .navLink {

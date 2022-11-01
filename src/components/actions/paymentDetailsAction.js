@@ -14,8 +14,7 @@ export const getAllPeriodicPayment = () => (dispatch) => {
       });
     })
     .catch((err) => console.log(err.message));
-  //   console.log(user);
-  //   console.log(apiEndPoint);
+ 
 };
 
 export const addPeriodicExpense = (data) => (dispatch, getState) => {

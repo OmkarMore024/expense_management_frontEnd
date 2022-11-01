@@ -11,18 +11,30 @@ export const userReducer = (state = { users: [], currentUser: {} }, action) => {
         users: action.payload.users,
       };
 
-      case actions.UPDATE_USER:
-        // console.log(action.payload.household);
-        // state.houseHolds  = state.houseHolds.map((household) => {
-        //   if (household._id === action.payload.household._id) {
-        //     household = action.payload.household;
-        //   }
-        //   return household;
-        // });
-        return {
-          ...state,
-          users: [...state.users],
-        }; 
+    case actions.UPDATE_USER:
+      const newArr = [...state.users];
+      
+      return {
+        ...state,
+        users: newArr,
+      };
+
+      case actions.DELETE_USER:
+      // const newArr = [...state.users];
+      const deleNewArr = state.members.filter((e) => {
+            return e._id !== action.payload.deleteMember._id;
+          });
+          //   console.log(newArr);
+    
+          return {
+            ...state,
+            members: newArr,
+          };
+      
+      return {
+        ...state,
+        users: newArr,
+      };
 
     case actions.GET_USER_BY_ID:
       return {

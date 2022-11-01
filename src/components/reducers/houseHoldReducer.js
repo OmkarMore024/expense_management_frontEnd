@@ -18,16 +18,17 @@ export const houseHoldReducer = (
       };
 
     case actions.UPDATE_HOUSHOLD:
-      console.log(action.payload.household);
-      state.houseHolds  = state.houseHolds.map((household) => {
-        if (household._id === action.payload.household._id) {
-          household = action.payload.household;
-        }
-        return household;
-      });
+      // console.log(action.payload.household);
+      // state.houseHolds  = state.houseHolds.map((household) => {
+      //   if (household._id === action.payload.household._id) {
+      //     household = action.payload.household;
+      //   }
+      //   return household;
+      // });
+      const newArr = [...state.houseHolds];
       return {
         ...state,
-        houseHolds: [...state.houseHolds],
+        houseHolds: newArr,
       };
 
     case actions.GET_PRIMARY_HOUSHOLDS:

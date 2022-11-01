@@ -1,11 +1,7 @@
 import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import {
-  deleteExpenseType,
-  getAllExpenseTypes,
-} from "../actions/expenseTypeAction";
+import { useEffect, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
 import { getAllUsers } from "../actions/usersAction";
 import { Link } from "react-router-dom";
@@ -14,14 +10,21 @@ export default function Users() {
   const users = useSelector((state) => state.userReducer.users);
 
   const dispatch = useDispatch();
+  const [titleName, setTitleName] = useState("");
 
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, []);
+    dispatch(getAllUsers({ titleName }));
+  }, [titleName]);
 
   const handleDelete = (id) => {
     console.log("in handle delete for user");
     // dispatch(deleteExpenseType(id));
+  };
+  const handleSearch = ({ target }) => {
+    console.log(target.value);
+    setTitleName(target.value.trim());
+    dispatch(getAllUsers({ titleName }));
+    // dispatch(getAllMembersBypfs({ houseHoldName }));
   };
 
   return (
@@ -32,6 +35,7 @@ export default function Users() {
             type={"text"}
             placeholder="Search"
             className="shadow px-2 py-1 my-3 bg-body rounded"
+            onChange={handleSearch}
           />
         </div>
         {/* <div className="col-6 symDiv">

@@ -1,15 +1,15 @@
-
 import axios from "axios";
 import * as actions from "./actionTypes";
 
 const apiEndPoint = "http://localhost:3111/api/" + "users";
 
-export const getAllUsers = () => (dispatch) => {
-    console.log("in user action get");
+export const getAllUsers = (titleName) => (dispatch, getState) => {
+  // console.log("in user action get");
   axios
-    .get(apiEndPoint)
+    .post(apiEndPoint + "/pfs", titleName, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
     .then((res) => {
-
       dispatch({
         type: actions.GET_USERS,
         payload: { users: res.data },
@@ -70,33 +70,30 @@ export const deleteExpenseType = (id) => (dispatch, getState) => {
 
 export const getCurrentUser = (id) => (dispatch, getState) => {
   //   console.log(id);
-    axios
-      .get(apiEndPoint + `/${id}`)
-      .then((response) => {
+  axios
+    .get(apiEndPoint + `/${id}`)
+    .then((response) => {
       //   console.log(response.data);
-        return dispatch({
-          type: actions.GET_USER_BY_ID,
-          payload: { user: response.data },
-        });
-      })
-      .catch((err) => console.log(err.message));
-  };
-  
-  export const updateUser = (data) => (dispatch, getState) => {
-    //   console.log(data);
-      axios
-        .put(apiEndPoint + `/${data._id}`,data,{
-          headers: { "x-auth-token": getState().loginReducer.token },
-        })
-        .then((response) => {
-        //   console.log(response.data);
-          return dispatch({
-            type: actions.UPDATE_USER,
-            payload: { user: response.data },
-          });
-        })
-        .catch((err) => console.log(err.message));
-    };
-    
+      return dispatch({
+        type: actions.GET_USER_BY_ID,
+        payload: { user: response.data },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};
 
-
+export const updateUser = (data) => (dispatch, getState) => {
+  //   console.log(data);
+  axios
+    .put(apiEndPoint + `/${data._id}`, data, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((response) => {
+      //   console.log(response.data);
+      return dispatch({
+        type: actions.UPDATE_USER,
+        payload: { user: response.data },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};

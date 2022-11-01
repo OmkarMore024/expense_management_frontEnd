@@ -30,7 +30,7 @@ export const removeLogin = () => {
   sessionStorage.setItem("token", "");
   return {
     type: actions.LOGOUT_USER,
-    payload: { token: null },
+    payload: { token: "" },
   };
 };
 

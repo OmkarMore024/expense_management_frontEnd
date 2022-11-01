@@ -9,7 +9,9 @@ export default function PrimaryUser() {
       </div>
       <div className="col-9">
         <div>
-          <h4>in primary user</h4>
+          <h5>
+            <i>Primary User DashBoard</i>
+          </h5>
         </div>
         <nav className="nav border-bottom">
           <NavLink className="navLinkTable" to="/primary-user/households">

@@ -6,6 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./actions/loginAction";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Login() {
   const schema = yup.object().shape({
     email: yup.string().min(5).max(255).email().required(),
@@ -27,17 +30,24 @@ export default function Login() {
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
 
   useEffect(() => {
-    console.log("in login.jsx" );
+    console.log("in login.jsx");
     console.log(userInfo);
     if (userInfo) {
-      if (userInfo.role === "Admin") {
-        navigate("/admin");
-      } else if (userInfo.role === "Primary User") {
-        navigate("/primary-user");
-      } else if (userInfo.role === "Member") {
-        navigate("/member");
+      if (userInfo.isActive === true) {
+        if (userInfo.role === "Admin") {
+          navigate("/admin");
+        } else if (userInfo.role === "Primary User") {
+          navigate("/primary-user");
+        } else if (userInfo.role === "Member") {
+          navigate("/member");
+        }
+      } else {
+        toast.error("Login declined ,Contact to admin", {
+          position: "bottom-left",
+        });
       }
     } else {
+      console.log("in the login jsx else loop");
       navigate("/login");
     }
   }, [userInfo, loginToken]);
@@ -59,8 +69,20 @@ export default function Login() {
           <div className="hero">
             <img src="images/exoenses_model.png" />
           </div>
+
           <div>
             <h2 className="hero-text">Let Us Help You, Manage Your Expense</h2>
+          </div>
+          <div className="danger">
+            {userInfo.isActive === false ? (
+              <ToastContainer
+              // position="bottom-left"
+              // autoClose={5000}
+              // closeOnClick
+              />
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className="col-5">

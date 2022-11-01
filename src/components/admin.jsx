@@ -14,14 +14,13 @@ export default function Admin() {
 
   return (
     <div className="row">
-      
       <div className="col-3">
         <SideDashboard firstName={userInfo.userName} />
       </div>
       <div className="col-9">
         <div>
           <div>
-            <h4>DashBoard</h4>
+            <h4>Admin DashBoard</h4>
           </div>
           <nav className="nav border-bottom">
             <NavLink className="navLinkTable" to="/admin/expensetype">

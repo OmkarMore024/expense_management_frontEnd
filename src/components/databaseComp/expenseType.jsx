@@ -9,15 +9,16 @@ import {
 } from "../actions/expenseTypeAction";
 import { MdAddCircle } from "react-icons/md";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function ExpenseType() {
   const expenses = useSelector((state) => state.expenseTypeReducer.expenses);
-  //   console.log(expenses);
-const dispatch = useDispatch();
+  const [titleName, setTitleName] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getAllExpenseTypes());
-  }, []);
+    dispatch(getAllExpenseTypes({ titleName }));
+  }, [titleName]);
 
   const handleDelete = (id) => {
     dispatch(deleteExpenseType(id));
@@ -25,6 +26,13 @@ const dispatch = useDispatch();
   const handleClick = () => {
     console.log("add btn in expesne");
     // navigate("")
+  };
+
+  const handleSearch = ({ target }) => {
+    console.log(target.value);
+    setTitleName(target.value.trim());
+    dispatch(getAllExpenseTypes({ titleName }));
+    // dispatch(getAllMembersBypfs({ houseHoldName }));
   };
 
   return (
@@ -35,6 +43,7 @@ const dispatch = useDispatch();
             type={"text"}
             placeholder="Search"
             className="shadow px-2 py-1 my-3 bg-body rounded"
+            onChange={handleSearch}
           />
         </div>
         <div className="col-6 symDiv">

@@ -21,11 +21,11 @@ export default function SideDashboard(props) {
   // }, []);
 
   const handleLogout = () => {
-    console.log("in handle logoutgghhf");
-    console.log(token);
+    console.log("in handle logout side-dashboard");
+    // console.log(token);
 
     dispatch(removeLogin());
-    // navigate("/login");
+    navigate("/");
 
     // console.log("2====" + token);
     // if (token === "logout") {
