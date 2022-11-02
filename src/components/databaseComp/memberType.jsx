@@ -16,7 +16,7 @@ export default function Members() {
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
 
   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
- 
+
   const members = useSelector((state) => state.memberReducer.members);
   const houseHoldFromMember = useSelector(
     (state) => state.memberReducer.houseHolds
@@ -47,19 +47,12 @@ export default function Members() {
     dispatch(getPrimarysHouseHolds(userInfo._id));
     // console.log(households);
     dispatch(getAllMembersBypfs({ houseHoldName }));
+  }, [houseHoldName]);
 
-    
-  }, []);
-  
   const handleSearch = ({ target }) => {
     console.log(target.value);
     setHouseHoldName(target.value);
     dispatch(getAllMembersBypfs({ houseHoldName }));
-    // households.map((houseHold) => {
-    //   console.log("---", houseHold._id);
-    //   dispatch(getHouseHoldmembers(houseHold._id));
-    //   membersNewArr.push(households);
-    // });
   };
 
   //   useEffect(() => {}, []);
@@ -81,37 +74,41 @@ export default function Members() {
           </Link>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr className="" key={"search and action"}>
-            <th className="">Members</th>
-            <th className="">HouseHold</th>
-            <th className="">Action</th>
-            {/* <th className="w-1/4 ...">Views</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {membersNewArr.map((member, index) => {
-            return (
-              <tr key={member._id}>
-                <td>
-                  {index + 1} {member.user.userName}
-                </td>
-                <td>{member.houseHold.name}</td>
-                <td>
-                  <div>
-                    <MdOutlineModeEditOutline className="svg-round" />
-                    <MdOutlineDelete
-                      className="svg-round"
-                      onClick={() => handleDelete(member._id)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {membersNewArr.length === 0 ? (
+        <div className="NoData">No Data found in Database</div>
+      ) : (
+        <table>
+          <thead>
+            <tr className="" key={"search and action"}>
+              <th className="">Members</th>
+              <th className="">HouseHold</th>
+              <th className="">Action</th>
+              {/* <th className="w-1/4 ...">Views</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {membersNewArr.map((member, index) => {
+              return (
+                <tr key={member._id}>
+                  <td>
+                    {index + 1} {member.user.userName}
+                  </td>
+                  <td>{member.houseHold.name}</td>
+                  <td>
+                    <div>
+                      <MdOutlineModeEditOutline className="svg-round" />
+                      <MdOutlineDelete
+                        className="svg-round"
+                        onClick={() => handleDelete(member._id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

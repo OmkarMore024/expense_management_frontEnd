@@ -37,7 +37,9 @@ export default function DailyExpense() {
   // console.log(households);
 
   let newArr = [];
+  let link;
   function getDailyExpensesInFrontEnd() {
+    link = "member";
     if (userInfo.role === "Member") {
       memberHouseHold.map((hh) => {
         dailyExpenses.forEach((pd) => {
@@ -47,6 +49,7 @@ export default function DailyExpense() {
         });
       });
     } else {
+      link = "primary-user";
       households.map((hh) => {
         // console.log(dailyExpenses);
         dailyExpenses.forEach((pd) => {
@@ -57,9 +60,9 @@ export default function DailyExpense() {
         });
       });
     }
+    // console.log("in fun get:" + link);
   }
   getDailyExpensesInFrontEnd();
-  // console.log(newArr);
 
   const handleDelete = (id) => {
     dispatch(deleteDailyExpense(id));
@@ -75,51 +78,62 @@ export default function DailyExpense() {
           />
         </div>
         <div className="col-6 symDiv">
-          <Link to="/primary-user/dailyexpense/adddailyexpense">
-            <MdAddCircle className="addSym my-3" />
+          <span className="px-2 py-2 shadow rounded">
+            Total Expenditure: ₹
+            {newArr.reduce((total, dx) => {
+              return total + dx.paymentDetails.amount;
+            }, 0)}
+          </span>
+
+          <Link to={`/${link}/dailyexpense/adddailyexpense`}>
+            <MdAddCircle className="addSym my-3 mx-3" />
           </Link>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr className="" key={"search and action"}>
-            <th className="">PaidDate</th>
-            <th className="">Expense type</th>
-            <th className="">HouseHold</th>
-            <th className="">Amount</th>
-            <th className="">Action</th>
-            {/* <th className="w-1/4 ...">Views</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {newArr.map((dailyExpense, index) => {
-            return (
-              <tr key={dailyExpense._id}>
-                <td>
-                  {index + 1})
-                  {new Date(
-                    dailyExpense.paymentDetails.date
-                  ).toLocaleDateString()}
-                </td>
-                <td>{dailyExpense.expensetype.name}</td>
-                <td>{dailyExpense.household.name}</td>
-                <td>₹ {dailyExpense.paymentDetails.amount}</td>
-                <td>
-                  <div>
-                    <Link to={`/primary-user/dailyexpense/${dailyExpense._id}`}>
-                      <MdOutlineModeEditOutline className="svg-round" />
-                    </Link>
-                    <MdOutlineDelete
-                      className="svg-round"
-                      onClick={() => handleDelete(dailyExpense._id)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {newArr.length === 0 ? (
+        <div className="NoData">No Data found in Database</div>
+      ) : (
+        <table>
+          <thead>
+            <tr className="" key={"search and action"}>
+              <th className="">PaidDate</th>
+              <th className="">Expense type</th>
+              <th className="">HouseHold</th>
+              <th className="">Amount</th>
+              <th className="">Action</th>
+              {/* <th className="w-1/4 ...">Views</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {newArr.map((dailyExpense, index) => {
+              return (
+                <tr key={dailyExpense._id}>
+                  <td>
+                    {index + 1})
+                    {new Date(
+                      dailyExpense.paymentDetails.date
+                    ).toLocaleDateString()}
+                  </td>
+                  <td>{dailyExpense.expensetype.name}</td>
+                  <td>{dailyExpense.household.name}</td>
+                  <td>₹ {dailyExpense.paymentDetails.amount}</td>
+                  <td>
+                    <div>
+                      <Link to={`/${link}/dailyexpense/${dailyExpense._id}`}>
+                        <MdOutlineModeEditOutline className="svg-round" />
+                      </Link>
+                      <MdOutlineDelete
+                        className="svg-round"
+                        onClick={() => handleDelete(dailyExpense._id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

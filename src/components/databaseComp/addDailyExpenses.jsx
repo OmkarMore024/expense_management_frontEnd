@@ -13,6 +13,7 @@ import {
 } from "../actions/paymentDetailsAction";
 import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
 import { addDaliyExpense } from "../actions/dailyExpenseAction";
+import { getHouseHoldByMemberid } from "../actions/membersAction";
 
 export function periodicPaymentLoader({ params }) {
   const periodicPaymentId = params.periodicPaymentId;
@@ -51,18 +52,45 @@ export default function EditDailyExpenses() {
   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
   const expenses = useSelector((state) => state.expenseTypeReducer.expenses);
   const members = useSelector((state) => state.userReducer.users);
+  let memberHouseHold = useSelector((state) => state.memberReducer.houseHolds);
 
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
 
   const periodicPaymentId = useLoaderData();
   console.log(periodicPaymentId);
-
+  let link;
+  let newHH;
   useEffect(() => {
     // dispatch(getAllMembers());
     // dispatch(getAllUsers());
-    dispatch(getPrimarysHouseHolds(userInfo._id));
+    // dispatch(getPrimarysHouseHolds(userInfo._id));
     dispatch(getAllExpenseTypes());
+    if (userInfo.role === "Member") {
+      link = "member";
+      dispatch(getHouseHoldByMemberid(userInfo._id));
+    } else if (userInfo.role === "Primary User") {
+      link = "primary-user";
+      dispatch(getPrimarysHouseHolds(userInfo._id));
+    }
   }, []);
+  let newArr = [];
+  function getDailyExpensesInFrontEnd() {
+    link = "member";
+    if (userInfo.role === "Member") {
+      memberHouseHold.map((hh) => {
+        newArr.push(hh.houseHold);
+      });
+    } else {
+      link = "primary-user";
+      households.map((hh) => {
+        newArr.push(hh);
+      });
+    }
+    // console.log("in fun get:" + link);
+  }
+  getDailyExpensesInFrontEnd();
+
+  console.log(newArr);
 
   useEffect(() => {
     if (!periodicPaymentId) return;
@@ -94,7 +122,7 @@ export default function EditDailyExpenses() {
     } else {
       console.log("add");
       dispatch(addDaliyExpense(data));
-      navigate("/primary-user/dailyexpense");
+      navigate(`/${link}/dailyexpense`);
     }
   };
   return (
@@ -114,7 +142,7 @@ export default function EditDailyExpenses() {
                   {...register("householdId")}
                 >
                   <option value={"all"}>select</option>
-                  {households.map((household) => {
+                  {newArr.map((household) => {
                     return (
                       <option value={household._id} key={household._id}>
                         {household.name}

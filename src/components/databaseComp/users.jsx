@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
 import { getAllUsers } from "../actions/usersAction";
 import { Link } from "react-router-dom";
+import { FaUserCheck, FaUserTimes } from "react-icons/fa";
 
 export default function Users() {
   const users = useSelector((state) => state.userReducer.users);
@@ -21,7 +22,6 @@ export default function Users() {
     // dispatch(deleteExpenseType(id));
   };
   const handleSearch = ({ target }) => {
-    console.log(target.value);
     setTitleName(target.value.trim());
     dispatch(getAllUsers({ titleName }));
     // dispatch(getAllMembersBypfs({ houseHoldName }));
@@ -45,7 +45,8 @@ export default function Users() {
       <table>
         <thead>
           <tr className="" key={"search and action"}>
-            <th className="">Expense Type</th>
+            <th className="">No</th>
+            <th className="">User Name</th>
             <th className="">Role</th>
             <th className="">Action</th>
             {/* <th className="w-1/4 ...">Views</th> */}
@@ -55,8 +56,9 @@ export default function Users() {
           {users.map((user, index) => {
             return (
               <tr key={user._id}>
+                <td>{index + 1} </td>
                 <td>
-                  {index + 1} {user.firstName} {user.lastName}
+                  {user.firstName} {user.lastName}
                 </td>
                 <td>{user.role}</td>
                 <td>

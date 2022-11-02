@@ -64,7 +64,7 @@ export default function UpdatePeriodicPayment() {
     dispatch(getCurrentPeriodicExpense(periodicPaymentId));
 
     setValue("dueDate", periodicPayment.dueDate);
-    // setValue("amount", periodicPayment.paymentDetails.amount);
+    setValue("amount", periodicPayment.amount);
     // setValue("method", periodicPayment.paymentDetails.method);
     // setValue("date", periodicPayment.paymentDetails.date);
     // setValue("paidBy", periodicPayment.paidBy);
@@ -132,7 +132,7 @@ export default function UpdatePeriodicPayment() {
             <div className="row">
               <div className="col-6">
                 <label htmlFor="amount" className="m-2">
-                  amount
+                  Amount .₹
                 </label>
                 <input
                   className="form-control m-2 bar"

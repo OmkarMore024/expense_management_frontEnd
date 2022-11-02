@@ -18,7 +18,7 @@ export default function PeriodicExpense() {
   let memberHouseHold = useSelector((state) => state.memberReducer.houseHolds);
   // console.log(households);
   const dispatch = useDispatch();
-  console.log(memberHouseHold);
+  // console.log(memberHouseHold);
   // console.log(paymentDetails.map((pd)=>pd.dueDate.getMonth()));
   useEffect(() => {
     dispatch(getAllPeriodicPayment());
@@ -82,7 +82,7 @@ export default function PeriodicExpense() {
         </div>
       </div>
       {newArr.length === 0 ? (
-        <div className="">No Data found in Database</div>
+        <div className="NoData">No Data found in Database</div>
       ) : (
         <table>
           <thead>
@@ -122,7 +122,7 @@ export default function PeriodicExpense() {
                     ) : (
                       <div>
                         <Link
-                          to={`//periodicexpense/${paymentDetail._id}`}
+                          to={`/member/periodicexpense/${paymentDetail._id}`}
                         >
                           <MdOutlineModeEditOutline className="svg-round" />
                         </Link>

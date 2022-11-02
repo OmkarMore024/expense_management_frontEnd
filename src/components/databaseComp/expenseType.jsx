@@ -69,7 +69,9 @@ export default function ExpenseType() {
                 </td>
                 <td>
                   <div>
-                    <MdOutlineModeEditOutline className="svg-round" />
+                    <Link to={`/admin/expensetype/${expense._id}`}>
+                      <MdOutlineModeEditOutline className="svg-round" />
+                    </Link>
                     <MdOutlineDelete
                       className="svg-round"
                       onClick={() => handleDelete(expense._id)}

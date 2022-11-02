@@ -17,7 +17,9 @@ import Admin from "./components/admin";
 import ExpenseType from "./components/databaseComp/expenseType";
 import Users from "./components/databaseComp/users";
 import ErrorPage from "./components/errorPage";
-import EditExpenseType from "./components/databaseComp/editExpenseType";
+import EditExpenseType, {
+  expenseLoader,
+} from "./components/databaseComp/editExpenseType";
 import PeriodicExpense from "./components/databaseComp/periodicexpense";
 import DailyExpense from "./components/databaseComp/dailyexpense";
 import Protected from "./components/common/protectedRoute";
@@ -52,6 +54,11 @@ const router = createBrowserRouter([
           { index: true, element: <ExpenseType /> },
           { path: "expensetype", element: <ExpenseType /> },
           { path: "expensetype/addExpenseType", element: <EditExpenseType /> },
+          {
+            path: "expensetype/:expenseId",
+            element: <EditExpenseType />,
+            loader: expenseLoader,
+          },
           { path: "users", element: <Users /> },
           { path: "users/:userId", element: <EditUser />, loader: userLoader },
         ],
@@ -95,7 +102,16 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <PeriodicExpense /> },
           { path: "periodicexpense", element: <PeriodicExpense /> },
+          {
+            path: "periodicexpense/:periodicPaymentId",
+            element: <UpdatePeriodicPayment />,
+            loader: periodicPaymentLoader,
+          },
           { path: "dailyexpense", element: <DailyExpense /> },
+          {
+            path: "dailyexpense/adddailyexpense",
+            element: <EditDailyExpenses />,
+          },
         ],
       },
     ],

@@ -21,11 +21,11 @@ export const getAllHouseHolds = () => (dispatch) => {
 };
 
 export const getPrimarysHouseHolds =
-  (primaryuserId) => (dispatch, getState) => {
+  (primaryuserId,titleName) => (dispatch, getState) => {
     axios
       .post(
         apiEndPoint + "/getHouseHold",
-        { primaryuserId },
+        { primaryuserId,titleName },
         {
           headers: { "x-auth-token": getState().loginReducer.token },
         }

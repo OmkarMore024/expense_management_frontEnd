@@ -6,7 +6,11 @@ import { Link } from "react-router-dom";
 import { Navigate, useLoaderData, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addExpenseType } from "../actions/expenseTypeAction";
+import {
+  addExpenseType,
+  getCurrentExpenseType,
+  updateExpenseType,
+} from "../actions/expenseTypeAction";
 
 export function expenseLoader({ params }) {
   const expenseId = params.expenseId;
@@ -30,6 +34,9 @@ export default function EditExpenseType() {
   const navigate = useNavigate();
 
   const expense = useSelector((state) => state.expenseTypeReducer.expenses);
+  const currentExpense = useSelector(
+    (state) => state.expenseTypeReducer.currentExpense
+  );
 
   const expenseId = useLoaderData();
   //   return <h2>expense form</h2>;
@@ -37,19 +44,20 @@ export default function EditExpenseType() {
 
   React.useEffect(() => {
     if (!expenseId) return;
-    // dispatch(getCurrentexpense(expenseId));
+    dispatch(getCurrentExpenseType(expenseId));
+    console.log("in edit expense", currentExpense);
     // const expense = expenses.find((g) => g._id === expenseId);
     // dispatch(updateexpense(expenseId));
-    setValue("name", expense.name);
-    setValue("_id", expense._id);
-  }, [expense._id]);
+    setValue("name", currentExpense.name);
+    setValue("_id", currentExpense._id);
+  }, [currentExpense._id]);
 
   let onSubmitData = (data) => {
-    console.log(data);
+    // console.log(data);
     if (data._id) {
       console.log("update");
-      // dispatch(updateexpense(data));
-      navigate("/expenses");
+      dispatch(updateExpenseType(data));
+      navigate("/admin/expensetype");
     } else {
       dispatch(addExpenseType(data));
       navigate("/admin/expensetype");

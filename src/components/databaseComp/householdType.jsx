@@ -8,16 +8,24 @@ import {
   getAllHouseHolds,
   getPrimarysHouseHolds,
 } from "../actions/houseHoldAction";
+import { useState } from "react";
 
 export default function HouseHold() {
   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
-  //   console.log("in hhh", userInfo);
+
+  const [titleName, setTitleName] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     // dispatch(getAllHouseHolds());
-    dispatch(getPrimarysHouseHolds(userInfo._id));
-  }, []);
+    dispatch(getPrimarysHouseHolds(userInfo._id, titleName));
+  }, [titleName]);
+
+  const handleSearch = ({ target }) => {
+    setTitleName(target.value.trim());
+    dispatch(getPrimarysHouseHolds(userInfo._id, titleName));
+  };
+
   return (
     <div>
       <div className="row">
@@ -26,6 +34,7 @@ export default function HouseHold() {
             type={"text"}
             placeholder="Search"
             className="shadow px-2 py-1 my-3 bg-body rounded"
+            onChange={handleSearch}
           />
         </div>
         <div className="col-6 symDiv">
@@ -34,37 +43,41 @@ export default function HouseHold() {
           </Link>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr className="" key={"search and action"}>
-            <th className="">HouseHold</th>
-            <th className="">Action</th>
-            {/* <th className="w-1/4 ...">Views</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {households.map((household, index) => {
-            return (
-              <tr key={household._id}>
-                <td>
-                  {index + 1} {household.name}
-                </td>
-                <td>
-                  <div>
-                    <Link to={`/primary-user/households/${household._id}`}>
-                      <MdOutlineModeEditOutline className="svg-round" />
-                    </Link>
-                    <MdOutlineDelete
-                      className="svg-round"
-                      //   onClick={() => handleDelete(household._id)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {households.length === 0 ? (
+        <div className="NoData">No Data found in Database</div>
+      ) : (
+        <table>
+          <thead>
+            <tr className="" key={"search and action"}>
+              <th className="">HouseHold</th>
+              <th className="">Action</th>
+              {/* <th className="w-1/4 ...">Views</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {households.map((household, index) => {
+              return (
+                <tr key={household._id}>
+                  <td>
+                    {index + 1} {household.name}
+                  </td>
+                  <td>
+                    <div>
+                      <Link to={`/primary-user/households/${household._id}`}>
+                        <MdOutlineModeEditOutline className="svg-round" />
+                      </Link>
+                      <MdOutlineDelete
+                        className="svg-round"
+                        //   onClick={() => handleDelete(household._id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
