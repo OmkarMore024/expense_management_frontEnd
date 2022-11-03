@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 // import { registerUser } from "../actions/registerAction";
 import { FaHtml5, FaUserAlt } from "react-icons/fa";
 import { HiLockClosed } from "react-icons/hi";
-import { registerUser } from "./actions/registerAction";
+import { registerUser } from "../actions/registerAction";
 
 export default function Register() {
   const schema = yup.object().shape({

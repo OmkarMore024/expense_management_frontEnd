@@ -1,11 +1,17 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
 
-const apiEndPoint = process.env.REACT_APP_API_URL+"householdexpenses";
+const apiEndPoint = process.env.REACT_APP_API_URL + "householdexpenses";
 
-export const getAllDailyExpenses = () => (dispatch) => {
+export const getAllDailyExpenses = (titleName) => (dispatch,getState) => {
   axios
-    .get(apiEndPoint)
+    .post(
+      apiEndPoint + "/pfs",
+      { titleName },
+      {
+        headers: { "x-auth-token": getState().loginReducer.token },
+      }
+    )
     .then((response) => {
       //   console.log(response.data);
       return dispatch({
@@ -26,7 +32,7 @@ export const addDaliyExpense = (data) => (dispatch, getState) => {
       dispatch({
         type: actions.ADD_DAILY_EXPENSE,
         payload: {
-            dailyExpense: res.data,
+          dailyExpense: res.data,
         },
       });
     })
@@ -40,7 +46,7 @@ export const deleteDailyExpense = (id) => (dispatch, getState) => {
       headers: { "x-auth-token": getState().loginReducer.token },
     })
     .then((res) => {
-    //   console.log(res.data);
+      //   console.log(res.data);
       dispatch({
         type: actions.DELETE_DAILY_EXPENSE,
         payload: {

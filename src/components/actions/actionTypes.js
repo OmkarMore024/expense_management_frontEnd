@@ -15,6 +15,8 @@ export const DELETE_USER = "DELETE_USER";
 export const SOFT_DELETE_USER = "SOFT_DELETE_USER";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
 export const UPDATE_USER = "UPDATE_USER";
+export const RESET_PASSWORD = "RESET_PASSWORD";
+export const UPDATE_PASSWORD = "RESET_PASSWORD";
 
 export const ADD_HOUSEHOLD = "ADD_HOUSEHOLD";
 export const GET_HOUSHOLDS = "GET_HOUSHOLDS";

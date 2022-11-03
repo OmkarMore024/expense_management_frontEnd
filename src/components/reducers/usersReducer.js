@@ -13,27 +13,36 @@ export const userReducer = (state = { users: [], currentUser: {} }, action) => {
 
     case actions.UPDATE_USER:
       const newArr = [...state.users];
-      
+
       return {
         ...state,
         users: newArr,
       };
 
-      case actions.DELETE_USER:
+    case actions.RESET_PASSWORD:
       // const newArr = [...state.users];
-      const deleNewArr = state.members.filter((e) => {
-            return e._id !== action.payload.deleteMember._id;
-          });
-          //   console.log(newArr);
-    
-          return {
-            ...state,
-            members: newArr,
-          };
-      
       return {
         ...state,
-        users: newArr,
+        user: { ...action.payload.user },
+      };
+
+    case actions.UPDATE_PASSWORD:
+      // const newArr = [...state.users];
+      return {
+        ...state,
+        currentUser: { ...action.payload.user },
+      };
+
+    case actions.DELETE_USER:
+      // const newArr = [...state.users];
+      const deleNewArr = state.users.filter((e) => {
+        return e._id !== action.payload.deleteUser._id;
+      });
+      //   console.log(newArr);
+
+      return {
+        ...state,
+        members: deleNewArr,
       };
 
     case actions.GET_USER_BY_ID:

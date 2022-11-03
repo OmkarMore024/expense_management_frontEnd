@@ -61,9 +61,9 @@ export const deleteUser = (id) => (dispatch, getState) => {
     .then((res) => {
       console.log(res.data);
       dispatch({
-        type: actions.DELETE_EXPENSE_TYPE,
+        type: actions.DELETE_USER,
         payload: {
-          deleteExpense: res.data,
+          deleteUser: res.data,
         },
       });
     })
@@ -94,6 +94,38 @@ export const updateUser = (data) => (dispatch, getState) => {
       //   console.log(response.data);
       return dispatch({
         type: actions.UPDATE_USER,
+        payload: { user: response.data },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};
+
+export const resetPassword = (data) => (dispatch, getState) => {
+  //   console.log(data);
+  axios
+    .patch(apiEndPoint + `/${"forgetpassword"}`, data, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((response) => {
+      //   console.log(response.data);
+      return dispatch({
+        type: actions.RESET_PASSWORD,
+        payload: { user: response.data },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};
+
+export const updatePassword = (data) => (dispatch, getState) => {
+  //   console.log(data);
+  axios
+    .put(apiEndPoint + `/${"changepassword/" + data._id}`, data, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((response) => {
+      //   console.log(response.data);
+      return dispatch({
+        type: actions.UPDATE_PASSWORD,
         payload: { user: response.data },
       });
     })

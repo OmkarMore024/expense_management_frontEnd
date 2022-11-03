@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   deleteDailyExpense,
   getAllDailyExpenses,
@@ -16,6 +16,7 @@ export default function DailyExpense() {
   const dailyExpenses = useSelector(
     (state) => state.dailyExpenseReducer.dailyExpenses
   );
+  const [titleName, setTitleName] = useState("");
 
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
@@ -23,7 +24,7 @@ export default function DailyExpense() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllDailyExpenses());
+    dispatch(getAllDailyExpenses(titleName));
 
     if (userInfo.role === "Member") {
       dispatch(getHouseHoldByMemberid(userInfo._id));
@@ -31,10 +32,7 @@ export default function DailyExpense() {
     } else if (userInfo.role === "Primary User") {
       dispatch(getPrimarysHouseHolds(userInfo._id));
     }
-  }, []);
-
-  // console.log(dailyExpenses);
-  // console.log(households);
+  }, [titleName]);
 
   let newArr = [];
   let link;
@@ -67,6 +65,10 @@ export default function DailyExpense() {
   const handleDelete = (id) => {
     dispatch(deleteDailyExpense(id));
   };
+  const handleSearch = ({ target }) => {
+    setTitleName(target.value);
+    dispatch(getAllDailyExpenses(titleName));
+  };
   return (
     <div>
       <div className="row">
@@ -75,6 +77,7 @@ export default function DailyExpense() {
             type={"text"}
             placeholder="Search"
             className="shadow px-2 py-1 my-3 bg-body rounded"
+            onChange={handleSearch}
           />
         </div>
         <div className="col-6 symDiv">

@@ -59,7 +59,6 @@ export default function EditDailyExpenses() {
   const periodicPaymentId = useLoaderData();
   console.log(periodicPaymentId);
   let link;
-  let newHH;
   useEffect(() => {
     // dispatch(getAllMembers());
     // dispatch(getAllUsers());

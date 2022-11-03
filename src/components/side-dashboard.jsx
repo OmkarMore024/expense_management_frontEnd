@@ -33,6 +33,10 @@ export default function SideDashboard(props) {
     //   navigate("/login");
     // }
   };
+  const handleDashboard = () => {
+    console.log("in handleDashboard in side-dashboard");
+    // navigate()
+  };
 
   return (
     <div className="side-dashboard">
@@ -50,7 +54,7 @@ export default function SideDashboard(props) {
         </div>
         <nav className="navDiv">
           <ul className="navTab">
-            <li className="navColor">
+            <li className="navColor" onClick={handleDashboard}>
               <RiDashboardFill className="sym" />
               Dashboard
             </li>

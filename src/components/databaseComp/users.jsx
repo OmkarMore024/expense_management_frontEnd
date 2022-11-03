@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
-import { getAllUsers } from "../actions/usersAction";
+import { deleteUser, getAllUsers } from "../actions/usersAction";
 import { Link } from "react-router-dom";
 import { FaUserCheck, FaUserTimes } from "react-icons/fa";
 
@@ -18,8 +18,8 @@ export default function Users() {
   }, [titleName]);
 
   const handleDelete = (id) => {
-    console.log("in handle delete for user");
-    // dispatch(deleteExpenseType(id));
+    // console.log("in handle delete for user");
+    dispatch(deleteUser(id));
   };
   const handleSearch = ({ target }) => {
     setTitleName(target.value.trim());

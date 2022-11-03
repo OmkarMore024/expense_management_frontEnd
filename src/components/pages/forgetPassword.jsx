@@ -4,15 +4,16 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "./actions/loginAction";
+import { loginUser } from "../actions/loginAction";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { resetPassword } from "../actions/usersAction";
 
-export default function Login() {
+export default function ForgetPassword() {
   const schema = yup.object().shape({
     email: yup.string().min(5).max(255).email().required(),
-    password: yup.string().min(6).max(1024).required(),
+    // password: yup.string().min(6).max(1024).required(),
   });
 
   const {
@@ -29,33 +30,19 @@ export default function Login() {
   const loginToken = useSelector((state) => state.loginReducer.token);
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
 
+  const logninDeclined = (message) =>
+    toast.error(message, {
+      position: "bottom-left",
+    });
+
   useEffect(() => {
     console.log("in login.jsx");
-    // console.log(userInfo);
-    if (userInfo) {
-      if (userInfo.isActive === true) {
-        if (userInfo.role === "Admin") {
-          navigate("/admin");
-        } else if (userInfo.role === "Primary User") {
-          navigate("/primary-user");
-        } else if (userInfo.role === "Member") {
-          navigate("/member");
-        }
-      } else {
-        toast.error("Login declined ,Contact to admin", {
-          position: "bottom-left",
-        });
-      }
-    } else {
-      console.log("in the login jsx else loop");
-      navigate("/login");
-    }
   }, [userInfo, loginToken]);
 
   let onSubmitData = (data) => {
-    // console.log(data);
+    console.log(data);
 
-    dispatch(loginUser(data));
+    dispatch(resetPassword(data));
     // console.log("in submit", loginToken);
     // navigate("/home");
     // reset();
@@ -65,34 +52,11 @@ export default function Login() {
     <div id="login">
       {/* <h3>in login page</h3> */}
       <div className="row py-4">
-        <div className="col-7">
-          <div className="hero">
-            <img src="images/exoenses_model.png" />
-          </div>
-
-          <div>
-            <h2 className="hero-text">Let Us Help You, Manage Your Expense</h2>
-          </div>
-          <div className="danger">
-            {userInfo.isActive === false ? (
-              <ToastContainer
-              // position="bottom-left"
-              // autoClose={5000}
-              // closeOnClick
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-        <div className="col-5">
+        <div className="reset-block">
           <div className="login-form justify-content-center align-items-center">
-            <div>
-              <img src="images/expenses_name.png" />
-            </div>
             <form onSubmit={handleSubmit(onSubmitData)} className="form-page">
               <h4 className="header-register mb-4" htmlFor="nameIn">
-                Log In
+                Reset Password
               </h4>
               <div>
                 <label htmlFor="email" className="my-1">
@@ -108,7 +72,7 @@ export default function Login() {
                 />
                 <p>{errors.email?.message}</p>
               </div>
-              <div>
+              {/* <div>
                 <label htmlFor="passwordIn" className="my-1">
                   Password
                 </label>
@@ -121,20 +85,12 @@ export default function Login() {
                   required
                 />
                 <p>{errors.password?.message}</p>
-              </div>
+              </div> */}
 
               <button type="submit" className="btn btn-primary ">
-                LOGIN
+                Reset
               </button>
-              <div className="info">
-                <p className="rigth py-2">Forget Password</p>
-                <p>
-                  Are you a new user?
-                  <span className="">
-                    <Link to="/register">Sign Up</Link>
-                  </span>
-                </p>
-              </div>
+              <div className="info"></div>
             </form>
           </div>
         </div>

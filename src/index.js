@@ -5,9 +5,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import Register from "./components/register";
-import Login from "./components/login";
-import Home from "./components/home";
+import Register from "./components/pages/register";
+import Login from "./components/pages/login";
+import Home from "./components/pages/home";
 import { Provider } from "react-redux";
 
 import store from "./store";
@@ -16,7 +16,7 @@ import Member from "./components/Members";
 import Admin from "./components/admin";
 import ExpenseType from "./components/databaseComp/expenseType";
 import Users from "./components/databaseComp/users";
-import ErrorPage from "./components/errorPage";
+import ErrorPage from "./components/pages/errorPage";
 import EditExpenseType, {
   expenseLoader,
 } from "./components/databaseComp/editExpenseType";
@@ -35,6 +35,8 @@ import UpdatePeriodicPayment, {
   periodicPaymentLoader,
 } from "./components/databaseComp/updatePeriodicPayment";
 import EditDailyExpenses from "./components/databaseComp/addDailyExpenses";
+import ResetPassword from "./components/pages/resetPassword";
+import ForgetPassword from "./components/pages/forgetPassword";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
       { path: "home", element: <Home /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
+      // { path: "login/checkHome", element: <Home /> },
+      { path: "forgetpassword", element: <ForgetPassword /> },
+
+      // {
+      //   path: "changepassword/:userId",
+      //   element: <ResetPassword />,
+      //   loader: userLoader,
+      // }
       {
         path: "admin",
         element: <Protected compo={<Admin />}></Protected>,
@@ -116,6 +126,12 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "changepassword/:userId",
+    element: <ResetPassword />,
+    loader: userLoader,
+  },
+  ,
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
