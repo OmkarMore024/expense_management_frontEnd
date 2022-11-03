@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
 
-const apiEndPoint = "http://localhost:3111/api/" + "expensetypes";
+const apiEndPoint = process.env.REACT_APP_API_URL + "expensetypes";
 
 export const getAllExpenseTypes = (titleName) => (dispatch, getState) => {
   axios

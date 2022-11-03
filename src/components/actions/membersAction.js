@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
 
-const apiEndPoint = "http://localhost:3111/api/householdmembers";
+const apiEndPoint = process.env.REACT_APP_API_URL+"householdmembers";
 
 export const getAllMembers = () => (dispatch) => {
   axios

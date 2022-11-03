@@ -7,21 +7,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
 import { getAllPeriodicPayment } from "../actions/paymentDetailsAction";
 import { getHouseHoldByMemberid } from "../actions/membersAction";
+// import { type } from "@testing-library/user-event/dist/type";
 
 export default function PeriodicExpense() {
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
-
   const paymentDetails = useSelector(
     (state) => state.paymentDetailsReducer.paymentDetails
   );
   let households = useSelector((state) => state.houseHoldReducer.houseHolds);
   let memberHouseHold = useSelector((state) => state.memberReducer.houseHolds);
-  // console.log(households);
+  //for searching
+  const [titleName, setTitleName] = useState("");
+  const [lastDate, setLastDate] = useState("");
   const dispatch = useDispatch();
-  // console.log(memberHouseHold);
-  // console.log(paymentDetails.map((pd)=>pd.dueDate.getMonth()));
+
+  const dateFequency = [
+    { title: "Today", date: 0 },
+    { title: "Yesteday", date: 1 },
+    { title: "Last 7 days", date: 7 },
+    { title: "Last Month", date: 31 },
+    { title: "Last 6 Month", date: 183 },
+    { title: "Last year", date: 365 },
+  ];
   useEffect(() => {
-    dispatch(getAllPeriodicPayment());
+    dispatch(getAllPeriodicPayment(titleName, lastDate));
 
     if (userInfo.role === "Member") {
       dispatch(getHouseHoldByMemberid(userInfo._id));
@@ -29,9 +38,29 @@ export default function PeriodicExpense() {
     } else if (userInfo.role === "Primary User") {
       dispatch(getPrimarysHouseHolds(userInfo._id));
     }
-  }, []);
+  }, [titleName]);
 
   let newArr = [];
+
+  const funDateSeacrh = (newArr) => {
+    let dateArr = [];
+    console.log("in fucntion of date");
+    if (lastDate) {
+      newArr.map((pd) => {
+        if (pd.paymentDetails.length !== 0) {
+          let mydate = new Date(
+            pd.paymentDetails[pd.paymentDetails.length - 1].date
+          );
+          console.log(new Date(Date.now()) >= mydate && mydate >= lastDate);
+          if (new Date(Date.now()) >= mydate && mydate >= lastDate)
+            dateArr.push(pd);
+        }
+      });
+    }
+    // console.log(dateArr);
+    return dateArr;
+  };
+
   function getHouseHoldInFrontEnd() {
     if (userInfo.role === "Member") {
       memberHouseHold.map((hh) => {
@@ -50,11 +79,35 @@ export default function PeriodicExpense() {
         });
       });
     }
+    if (lastDate) {
+      newArr = funDateSeacrh(newArr);
+    }
+    // console.log(newArr);
   }
   getHouseHoldInFrontEnd();
-  console.log(newArr);
+
+  // funDateSeacrh(newArr);
+
   const handleDelete = (id) => {
     // dispatch(deleteHouseHoldMember(id));
+  };
+
+  const handleSearch = ({ target }) => {
+    setTitleName(target.value.trim());
+    dispatch(getAllPeriodicPayment(titleName, lastDate));
+  };
+
+  const handleDateFilter = ({ target }) => {
+    // console.log(
+    //   typeof new Date(Date.now() - target.value * 86400000).toISOString()
+    // );
+    if (target.value !== "all") {
+      console.log(target.value);
+      setLastDate(new Date(Date.now() - target.value * 86400000));
+    } else {
+      setLastDate("");
+    }
+    dispatch(getAllPeriodicPayment(titleName, lastDate));
   };
 
   return (
@@ -65,15 +118,29 @@ export default function PeriodicExpense() {
             type={"text"}
             placeholder="Search"
             className="shadow px-2 py-1 my-3 bg-body rounded"
-            // onChange={handleSearch}
+            onChange={handleSearch}
           />
         </div>
         <div className="col-6 symDiv">
           <div className="button-flex">
             {userInfo.role === "Primary User" ? (
-              <Link to="/primary-user/periodicexpense/addperiodicexpenses">
-                <MdAddCircle className="addSym my-3" />
-              </Link>
+              <div>
+                <select className="filter" onChange={handleDateFilter}>
+                  <option value={"all"} key={"all"}>
+                    All Data
+                  </option>
+                  {dateFequency.map((f) => {
+                    return (
+                      <option value={f.date} key={f.title}>
+                        {f.title}
+                      </option>
+                    );
+                  })}
+                </select>
+                <Link to="/primary-user/periodicexpense/addperiodicexpenses">
+                  <MdAddCircle className="addSym my-3" />
+                </Link>
+              </div>
             ) : (
               <span></span>
               // <span>Members can only Pay/update the payment</span>
@@ -105,7 +172,7 @@ export default function PeriodicExpense() {
                   </td>
                   <td>{paymentDetail.household.name}</td>
                   <td>{paymentDetail.expensetype.name}</td>
-                  <td>{paymentDetail.paidBy.map((p) => p)}</td>
+                  <td>{paymentDetail.paidBy.map((p) => p + ",")}</td>
                   <td>
                     {userInfo.role === "Primary User" ? (
                       <div>

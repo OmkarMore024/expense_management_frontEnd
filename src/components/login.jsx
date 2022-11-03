@@ -31,7 +31,7 @@ export default function Login() {
 
   useEffect(() => {
     console.log("in login.jsx");
-    console.log(userInfo);
+    // console.log(userInfo);
     if (userInfo) {
       if (userInfo.isActive === true) {
         if (userInfo.role === "Admin") {

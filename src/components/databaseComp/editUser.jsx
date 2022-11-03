@@ -17,7 +17,7 @@ export function userLoader({ params }) {
 }
 
 const schema = yup.object().shape({
-  firstName: yup.string().min(5).max(50).required(),
+  firstName: yup.string().min(2).max(50).required(),
   lastName: yup.string().min(2).max(50).required(),
   email: yup.string().min(5).max(255).required().email(),
   phone: yup.string().min(7).max(10).required(),
@@ -164,9 +164,9 @@ export default function EditUser() {
                   <input
                     className="form-check-input  m-2 bar"
                     type="checkbox"
-                    value={true}
+                    // value={true}
                     {...register("isActive")}
-                    checked={user.isActive}
+                    // checked={user.isActive}
                     id="flexCheckDefault"
                   />
 

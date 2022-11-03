@@ -1,8 +1,10 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
 
-const apiEndPoint = "http://localhost:3111/api/" + "users";
+// const apiEndPoint = "http://localhost:3111/api/" + "users";
+const apiEndPoint = process.env.REACT_APP_API_URL + "users";
 
+console.log("ooo", apiEndPoint);
 export const getAllUsers = (titleName) => (dispatch, getState) => {
   // console.log("in user action get");
   axios
@@ -50,7 +52,7 @@ export const softDeleteExpenseType = (id) => (dispatch, getState) => {
     .catch((err) => console.log(err.message));
 };
 
-export const deleteExpenseType = (id) => (dispatch, getState) => {
+export const deleteUser = (id) => (dispatch, getState) => {
   console.log("in delete expenseType:", id);
   axios
     .delete(apiEndPoint + "/" + id, {

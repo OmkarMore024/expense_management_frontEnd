@@ -9,7 +9,7 @@ import jwt_decode from "jwt-decode";
 function App() {
   let [userLogin1, setuserLogin] = useState("none");
   const token = useSelector((state) => state.loginReducer.token);
-  console.log("in app.js");
+  // console.log("in app.js");
   const navigate = useNavigate();
   // const decoded = token ? jwt_decode(token) : null;
   // console.log(decoded);

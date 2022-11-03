@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
 
-const apiEndPoint = "http://localhost:3111/api/householdexpenses";
+const apiEndPoint = process.env.REACT_APP_API_URL+"householdexpenses";
 
 export const getAllDailyExpenses = () => (dispatch) => {
   axios
@@ -10,7 +10,7 @@ export const getAllDailyExpenses = () => (dispatch) => {
       //   console.log(response.data);
       return dispatch({
         type: actions.GET_DAILY_EXPENSES,
-        payload: { houseHoldExpenses: response.data },
+        payload: { dailyExpenses: response.data },
       });
     })
     .catch((err) => console.log(err.message));
@@ -26,7 +26,7 @@ export const addDaliyExpense = (data) => (dispatch, getState) => {
       dispatch({
         type: actions.ADD_DAILY_EXPENSE,
         payload: {
-          houseHoldExpense: res.data,
+            dailyExpense: res.data,
         },
       });
     })
@@ -44,7 +44,7 @@ export const deleteDailyExpense = (id) => (dispatch, getState) => {
       dispatch({
         type: actions.DELETE_DAILY_EXPENSE,
         payload: {
-          deletehouseHoldExpense: res.data,
+          deleteDailyExpense: res.data,
         },
       });
     })

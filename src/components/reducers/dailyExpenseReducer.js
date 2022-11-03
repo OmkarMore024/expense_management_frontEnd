@@ -5,7 +5,7 @@ export const dailyExpenseReducer = (state = { dailyExpenses: [] }, action) => {
     case actions.GET_DAILY_EXPENSES:
       return {
         ...state,
-        dailyExpenses: action.payload.houseHoldExpenses,
+        dailyExpenses: action.payload.dailyExpenses,
       };
 
     case actions.ADD_DAILY_EXPENSE:
@@ -20,9 +20,9 @@ export const dailyExpenseReducer = (state = { dailyExpenses: [] }, action) => {
     case actions.DELETE_DAILY_EXPENSE:
       // console.log(action.payload.deleteExpense._id);
       const newArr = state.dailyExpenses.filter((e) => {
-        return e._id !== action.payload.deletehouseHoldExpense._id;
+        return e._id !== action.payload.deleteDailyExpense._id;
       });
-    //   console.log(newArr);
+      //   console.log(newArr);
       return {
         ...state,
         dailyExpenses: newArr,

@@ -86,11 +86,10 @@ export default function EditDailyExpenses() {
         newArr.push(hh);
       });
     }
-    // console.log("in fun get:" + link);
   }
   getDailyExpensesInFrontEnd();
 
-  console.log(newArr);
+//   console.log(newArr);
 
   useEffect(() => {
     if (!periodicPaymentId) return;
@@ -122,7 +121,8 @@ export default function EditDailyExpenses() {
     } else {
       console.log("add");
       dispatch(addDaliyExpense(data));
-      navigate(`/${link}/dailyexpense`);
+        navigate(`/${link}/dailyexpense`);
+    //   navigate("/primary-user/dailyexpense");
     }
   };
   return (

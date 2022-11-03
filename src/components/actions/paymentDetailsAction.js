@@ -1,21 +1,26 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
+const apiEndPoint = process.env.REACT_APP_API_URL + "periodicpayments";
 
-const apiEndPoint = "http://localhost:3111/api/periodicpayments";
-
-export const getAllPeriodicPayment = () => (dispatch) => {
-  axios
-    .get(apiEndPoint)
-    .then((response) => {
-      //   console.log(response.data);
-      return dispatch({
-        type: actions.GET_PAYMENT_DETAILS,
-        payload: { periodicPayment: response.data },
-      });
-    })
-    .catch((err) => console.log(err.message));
- 
-};
+export const getAllPeriodicPayment =
+  (titleName, lastDate) => (dispatch, getState) => {
+    axios
+      .post(
+        apiEndPoint + "/pfs",
+        { titleName, lastDate },
+        {
+          headers: { "x-auth-token": getState().loginReducer.token },
+        }
+      )
+      .then((response) => {
+        //   console.log(response.data);
+        return dispatch({
+          type: actions.GET_PAYMENT_DETAILS,
+          payload: { periodicPayment: response.data },
+        });
+      })
+      .catch((err) => console.log(err.message));
+  };
 
 export const addPeriodicExpense = (data) => (dispatch, getState) => {
   axios

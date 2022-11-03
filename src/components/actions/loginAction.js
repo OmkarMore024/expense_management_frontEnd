@@ -1,11 +1,11 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
 
-const apiEndPoint = "http://localhost:3111/api/" + "login";
+const apiEndPoint = process.env.REACT_APP_API_URL+ "login";
 // const apiEndPoint = process.env.REACT_APP_API_URL + "users";
 
 export const loginUser = (login) => (dispatch) => {
-  console.log(login);
+  // console.log(login);
   axios
     .post(apiEndPoint, login)
     .then((response) => {
