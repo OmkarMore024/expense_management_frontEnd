@@ -5,13 +5,13 @@ import { RiToolsFill } from "react-icons/ri";
 import { IoIosLogOut } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { loadLogin, removeLogin } from "./actions/loginAction";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SideDashboard(props) {
   const { handleClick, firstName } = props;
   const token = useSelector((state) => state.loginReducer.token);
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
-  // console.log("in sideDashboard", userInfo);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,19 +19,26 @@ export default function SideDashboard(props) {
   // useEffect(() => {
   //   if (token) dispatch(loadLogin());
   // }, []);
+  let dashLink = "";
+  if (userInfo.role === "Admin") {
+    dashLink = "admin";
+    // navigate("/admin");
+  } else if (userInfo.role === "Primary User") {
+    dashLink = "primary-user";
+  } else if (userInfo.role === "Member") {
+    dashLink = "member";
+  }
 
   const handleLogout = () => {
     console.log("in handle logout side-dashboard");
     // console.log(token);
 
     dispatch(removeLogin());
-    navigate("/");
 
-    // console.log("2====" + token);
-    // if (token === "logout") {
-    //   console.log("in navigate login");
-    //   navigate("/login");
-    // }
+    navigate("/");
+    (() => {
+      toast.info("Logout Succesfully !");
+    })();
   };
   const handleDashboard = () => {
     console.log("in handleDashboard in side-dashboard");
@@ -54,10 +61,13 @@ export default function SideDashboard(props) {
         </div>
         <nav className="navDiv">
           <ul className="navTab">
-            <li className="navColor" onClick={handleDashboard}>
-              <RiDashboardFill className="sym" />
-              Dashboard
-            </li>
+            <NavLink to={`/${dashLink}`}>
+              <li className="navColor">
+                <RiDashboardFill className="sym" />
+                Dashboard
+              </li>
+            </NavLink>
+
             <li className="navColor">
               <IoMdNotifications className="sym" />
               Notifications

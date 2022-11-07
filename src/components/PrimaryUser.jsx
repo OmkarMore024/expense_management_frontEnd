@@ -4,10 +4,10 @@ import SideDashboard from "./side-dashboard";
 export default function PrimaryUser() {
   return (
     <div className="row">
-      <div className="col-3">
+      <div className="col-2">
         <SideDashboard />
       </div>
-      <div className="col-9">
+      <div className="col-10 px-5">
         <div>
           <h5>
             <i>Primary User DashBoard</i>

@@ -16,7 +16,7 @@ export default function Register() {
     firstName: yup.string().min(2).max(50).required(),
     lastName: yup.string().min(3).max(50).required(),
     userName: yup.string().min(5).max(50).required(),
-    phone: yup.string().min(5).max(50).required(),
+    phone: yup.string().min(8).max(10).required(),
 
     email: yup.string().min(5).max(255).email().required(),
     role: yup.string().min(3).max(15).required(),
@@ -54,23 +54,25 @@ export default function Register() {
       <div className="row py-4">
         <div className="col-7">
           <div className="hero">
-            <img src="images/exoenses_model.png" />
+            <img src="images/expense-guide-1.png" />
           </div>
-          <div>
-            <h2 className="hero-text">Let Us Help You, Manage Your Expense</h2>
+          <div className="hero-style">
+            <h2 className="hero-text">
+              Let Us Help You, To Manage<p> Your Expenses</p>
+            </h2>
           </div>
         </div>
-        <div className="col-5">
-          <div className="login-form justify-content-center align-items-center">
+        <div className="col-5 overflow-auto">
+          <div className="register-form justify-content-center align-items-center">
             <div>
               <img src="images/expenses_name.png" />
             </div>
-            <form onSubmit={handleSubmit(onSubmitData)} className="form-page">
+            <form onSubmit={handleSubmit(onSubmitData)} className="form-page ">
               <h4 className="header-register mb-4" htmlFor="nameIn">
                 Sign Up
               </h4>
               <div className="info">
-                <p>
+                <p className="">
                   Already have an account?
                   <span className="">
                     <Link to="/login">Log In</Link>
@@ -88,7 +90,7 @@ export default function Register() {
                   id="fname"
                   required
                 />
-                <p>{errors.firstName?.message}</p>
+                <p className="text-danger">{errors.firstName?.message}</p>
               </div>
               <div>
                 <label htmlFor="lname" className="my-1">
@@ -102,7 +104,7 @@ export default function Register() {
                   id="lname"
                   required
                 />
-                <p>{errors.lastName?.message}</p>
+                <p className="text-danger">{errors.lastName?.message}</p>
               </div>
               <div>
                 <label htmlFor="username" className="my-1">
@@ -115,7 +117,7 @@ export default function Register() {
                   id="userName"
                   required
                 />
-                <p>{errors.userName?.message}</p>
+                <p className="text-danger">{errors.userName?.message}</p>
               </div>
               <div>
                 <label htmlFor="phone" className="my-1">
@@ -128,7 +130,7 @@ export default function Register() {
                   id="phone"
                   required
                 />
-                <p>{errors.phone?.message}</p>
+                <p className="text-danger">{errors.phone?.message}</p>
               </div>
               <div>
                 <label htmlFor="email" className="my-1">
@@ -142,7 +144,7 @@ export default function Register() {
                   id="email"
                   required
                 />
-                <p>{errors.email?.message}</p>
+                <p className="text-danger">{errors.email?.message}</p>
               </div>
               <div>
                 <label htmlFor="passwordIn" className="my-1">
@@ -156,7 +158,7 @@ export default function Register() {
                   id="passwordIn"
                   required
                 />
-                <p>{errors.password?.message}</p>
+                <p className="text-danger">{errors.password?.message}</p>
               </div>
               <div>
                 <label htmlFor="roleIn" className="my-1">

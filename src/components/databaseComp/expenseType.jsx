@@ -56,7 +56,7 @@ export default function ExpenseType() {
         <thead>
           <tr className="" key={"search and action"}>
             <th className="">Expense Type</th>
-            <th className="">Action</th>
+            <th className="action">Action</th>
             {/* <th className="w-1/4 ...">Views</th> */}
           </tr>
         </thead>
@@ -68,7 +68,7 @@ export default function ExpenseType() {
                   {index + 1} {expense.name}
                 </td>
                 <td>
-                  <div>
+                  <div className="action-sym">
                     <Link to={`/admin/expensetype/${expense._id}`}>
                       <MdOutlineModeEditOutline className="svg-round" />
                     </Link>

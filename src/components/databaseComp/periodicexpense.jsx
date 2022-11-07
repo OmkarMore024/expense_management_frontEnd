@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
 import { getAllPeriodicPayment } from "../actions/paymentDetailsAction";
 import { getHouseHoldByMemberid } from "../actions/membersAction";
+import { HiOutlineSearch } from "react-icons/hi";
 // import { type } from "@testing-library/user-event/dist/type";
 
 export default function PeriodicExpense() {
@@ -16,6 +17,7 @@ export default function PeriodicExpense() {
   );
   let households = useSelector((state) => state.houseHoldReducer.houseHolds);
   let memberHouseHold = useSelector((state) => state.memberReducer.houseHolds);
+
   //for searching
   const [titleName, setTitleName] = useState("");
   const [lastDate, setLastDate] = useState("");
@@ -117,14 +119,16 @@ export default function PeriodicExpense() {
           <input
             type={"text"}
             placeholder="Search"
-            className="shadow px-2 py-1 my-3 bg-body rounded"
+            className="shadow px-2 py-1 my-3 bg-body outline-none"
             onChange={handleSearch}
           />
+          {/* <HiOutlineSearch /> */}
         </div>
+
         <div className="col-6 symDiv">
           <div className="button-flex">
             {userInfo.role === "Primary User" ? (
-              <div>
+              <div className="flex justify-between">
                 <select className="filter" onChange={handleDateFilter}>
                   <option value={"all"} key={"all"}>
                     All Data
@@ -154,11 +158,13 @@ export default function PeriodicExpense() {
         <table>
           <thead>
             <tr className="" key={"search and action"}>
-              <th className="">Duedate</th>
+              <th className="" scope="col">
+                Duedate
+              </th>
               <th className="">HouseHold</th>
               <th className="">Expense type</th>
               <th className="">paid by</th>
-              <th className="">Action</th>
+              <th className="action">Action</th>
               {/* <th className="w-1/4 ...">Views</th> */}
             </tr>
           </thead>
@@ -175,7 +181,7 @@ export default function PeriodicExpense() {
                   <td>{paymentDetail.paidBy.map((p) => p + ",")}</td>
                   <td>
                     {userInfo.role === "Primary User" ? (
-                      <div>
+                      <div className="action-sym">
                         <Link
                           to={`/primary-user/periodicexpense/${paymentDetail._id}`}
                         >

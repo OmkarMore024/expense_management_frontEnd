@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Login() {
   const schema = yup.object().shape({
     email: yup.string().min(5).max(255).email().required(),
-    password: yup.string().min(6).max(1024).required(),
+    password: yup.string().min(6).max(1024).required("Enter valid password"),
   });
 
   const {
@@ -34,6 +34,10 @@ export default function Login() {
       position: "bottom-left",
     });
 
+  const loginSuccess = () => toast.success("Login Successful!");
+  const loginDeclined = () =>
+    toast.error("Login declined,Please contact to admin!");
+
   useEffect(() => {
     console.log("in login.jsx");
     // console.log(userInfo);
@@ -41,18 +45,23 @@ export default function Login() {
       if (userInfo.isActive === true) {
         if (userInfo.role === "Admin") {
           navigate("/admin");
+          loginSuccess();
         } else if (userInfo.role === "Primary User") {
           navigate("/primary-user");
+          loginSuccess();
         } else if (userInfo.role === "Member") {
           navigate("/member");
+          loginSuccess();
         }
-      } else {
+      } else if (userInfo.isActive === false) {
+        loginDeclined();
+        //jjhhjk
       }
     } else {
       console.log("in the login jsx else loop");
       navigate("/login");
     }
-  }, [userInfo, loginToken]);
+  }, [userInfo]);
 
   let onSubmitData = (data) => {
     // console.log(data);
@@ -69,11 +78,12 @@ export default function Login() {
       <div className="row py-4">
         <div className="col-7">
           <div className="hero">
-            <img src="images/exoenses_model.png" />
+            <img src="images/expense-guide-1.png" />
           </div>
-
-          <div>
-            <h2 className="hero-text">Let Us Help You, Manage Your Expense</h2>
+          <div className="hero-style">
+            <h2 className="hero-text">
+              Let Us Help You, To Manage<p> Your Expenses</p>
+            </h2>
           </div>
           {/* <div className="danger">
             {userInfo.isActive === false
@@ -107,7 +117,7 @@ export default function Login() {
                   id="email"
                   required
                 />
-                <p>{errors.email?.message}</p>
+                <p className="text-danger">{errors.email?.message}</p>
               </div>
               <div>
                 <label htmlFor="passwordIn" className="my-1">
@@ -121,7 +131,7 @@ export default function Login() {
                   id="passwordIn"
                   required
                 />
-                <p>{errors.password?.message}</p>
+                <p className="text-danger">{errors.password?.message}</p>
               </div>
 
               <button type="submit" className="btn btn-primary ">
@@ -133,7 +143,7 @@ export default function Login() {
                     <Link to="/forgetpassword">Forget Password</Link>
                   </span>
                 </p>
-                <p>
+                <p className="">
                   Are you a new user?
                   <span className="">
                     <Link to="/register">Sign Up</Link>

@@ -14,10 +14,10 @@ export default function Admin() {
 
   return (
     <div className="row">
-      <div className="col-3">
+      <div className="col-2">
         <SideDashboard firstName={userInfo.userName} />
       </div>
-      <div className="col-9">
+      <div className="col-10 px-5">
         <div>
           <div>
             <h4>Admin DashBoard</h4>

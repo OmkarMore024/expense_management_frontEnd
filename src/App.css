@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400&display=swap");
+
 * {
   box-sizing: border-box;
   /* background-size: cover; */
@@ -6,12 +8,23 @@
 }
 #register,
 #login {
-  background-color: rgb(250, 250, 250);
+  height: 100%;
+  background: repeating-linear-gradient(
+    315deg,
+    rgb(250, 250, 250),
+    rgb(248, 248, 248) 15%
+  );
+  /* background-color: rgb(250, 250, 250); */
 }
 #register form,
 #login form {
   width: 300px;
   height: 250px;
+}
+table,
+.navbar,
+nav {
+  font-family: "poppins";
 }
 
 #register .col-5,
@@ -52,6 +65,9 @@ span a {
 .hero,
 .hero-text {
   padding: 52px;
+}
+.hero-text {
+  margin-bottom: 58px;
 }
 .rigth {
   text-align: right;
@@ -198,6 +214,16 @@ tr th {
   color: white;
 }
 
+.symDiv > a,
+.action-sym,
+.action {
+  display: flex;
+  justify-content: end;
+}
+.action {
+  padding-right: 54px;
+}
+
 .household .btn:hover {
   background-color: #00d47a;
   color: white;
@@ -215,11 +241,25 @@ tr th {
   padding: 8px 0;
   border-bottom: 2px solid #017dda;
 }
-
 .reset-block {
   display: flex;
   justify-content: center;
   margin: 180px 0;
+}
+.filter {
+  width: 150px;
+  height: 30px;
+  margin: 18px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 2px 2px #cdc4c4;
+}
+.hero-style {
+  font-family: "poppins";
+}
+.hero-style p {
+  font-style: italic;
+  font-weight: 700;
+  border-bottom: 2px dashed #746a6a;
 }
 
 /* .navLink {

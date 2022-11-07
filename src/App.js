@@ -8,13 +8,11 @@ import jwt_decode from "jwt-decode";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 function App() {
   let [userLogin1, setuserLogin] = useState("none");
   const token = useSelector((state) => state.loginReducer.token);
   // console.log("in app.js");
   const navigate = useNavigate();
-  
 
   //for avoiding the refresh login
   const dispatch = useDispatch();
@@ -37,7 +35,7 @@ function App() {
           <Outlet />
         </div>
       )}
-      <ToastContainer />
+      <ToastContainer theme="colored" position="bottom-left" autoClose={2000} />
     </div>
   );
 }

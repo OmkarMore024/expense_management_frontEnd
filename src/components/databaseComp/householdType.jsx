@@ -33,7 +33,7 @@ export default function HouseHold() {
           <input
             type={"text"}
             placeholder="Search"
-            className="shadow px-2 py-1 my-3 bg-body rounded"
+            className="shadow px-2 py-1 my-3 bg-body rounded outline-none"
             onChange={handleSearch}
           />
         </div>
@@ -50,7 +50,7 @@ export default function HouseHold() {
           <thead>
             <tr className="" key={"search and action"}>
               <th className="">HouseHold</th>
-              <th className="">Action</th>
+              <th className="action">Action</th>
               {/* <th className="w-1/4 ...">Views</th> */}
             </tr>
           </thead>
@@ -62,7 +62,7 @@ export default function HouseHold() {
                     {index + 1} {household.name}
                   </td>
                   <td>
-                    <div>
+                    <div className="action-sym">
                       <Link to={`/primary-user/households/${household._id}`}>
                         <MdOutlineModeEditOutline className="svg-round" />
                       </Link>

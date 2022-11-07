@@ -76,21 +76,23 @@ export default function DailyExpense() {
           <input
             type={"text"}
             placeholder="Search"
-            className="shadow px-2 py-1 my-3 bg-body rounded"
+            className="shadow px-2 py-1 my-3 bg-body rounded outline-none"
             onChange={handleSearch}
           />
         </div>
         <div className="col-6 symDiv">
-          <span className="px-2 py-2 shadow rounded">
-            Total Expenditure: ₹
-            {newArr.reduce((total, dx) => {
-              return total + dx.paymentDetails.amount;
-            }, 0)}
-          </span>
+          <div className="flex justify-between">
+            <span className="px-2 py-2 shadow rounded h-9 m-3">
+              Total Expenditure: <b className="text-danger">₹</b>
+              {newArr.reduce((total, dx) => {
+                return total + dx.paymentDetails.amount;
+              }, 0)}
+            </span>
 
-          <Link to={`/${link}/dailyexpense/adddailyexpense`}>
-            <MdAddCircle className="addSym my-3 mx-3" />
-          </Link>
+            <Link to={`/${link}/dailyexpense/adddailyexpense`}>
+              <MdAddCircle className="addSym my-3 mx-3" />
+            </Link>
+          </div>
         </div>
       </div>
       {newArr.length === 0 ? (
@@ -103,7 +105,7 @@ export default function DailyExpense() {
               <th className="">Expense type</th>
               <th className="">HouseHold</th>
               <th className="">Amount</th>
-              <th className="">Action</th>
+              <th className="action">Action</th>
               {/* <th className="w-1/4 ...">Views</th> */}
             </tr>
           </thead>
@@ -121,7 +123,7 @@ export default function DailyExpense() {
                   <td>{dailyExpense.household.name}</td>
                   <td>₹ {dailyExpense.paymentDetails.amount}</td>
                   <td>
-                    <div>
+                    <div className="action-sym">
                       <Link to={`/${link}/dailyexpense/${dailyExpense._id}`}>
                         <MdOutlineModeEditOutline className="svg-round" />
                       </Link>

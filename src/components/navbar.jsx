@@ -6,7 +6,7 @@ export default function NavBar() {
     <div>
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
-          <NavLink className="navbar-brand">Navbar</NavLink>
+          <NavLink className="navbar-brand">Exms.com</NavLink>
 
           <button
             className="navbar-toggler"

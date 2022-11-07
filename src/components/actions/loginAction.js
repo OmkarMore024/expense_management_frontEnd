@@ -1,7 +1,8 @@
 import * as actions from "./actionTypes";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const apiEndPoint = process.env.REACT_APP_API_URL+ "login";
+const apiEndPoint = process.env.REACT_APP_API_URL + "login";
 // const apiEndPoint = process.env.REACT_APP_API_URL + "users";
 
 export const loginUser = (login) => (dispatch) => {
@@ -16,7 +17,14 @@ export const loginUser = (login) => (dispatch) => {
         payload: { token: response.data },
       });
     })
-    .catch((err) => console.log(err.message));
+    .catch((err) => {
+      (() => {
+        // console.log(err.response.data);
+        toast.error(err.response.data);
+      })();
+      // console.log("Invalid passsword");
+      console.log(err);
+    });
   console.log(login);
 };
 

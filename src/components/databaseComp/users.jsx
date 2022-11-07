@@ -34,7 +34,7 @@ export default function Users() {
           <input
             type={"text"}
             placeholder="Search"
-            className="shadow px-2 py-1 my-3 bg-body rounded"
+            className="shadow px-2 py-1 my-3 bg-body rounded outline-none"
             onChange={handleSearch}
           />
         </div>
@@ -48,7 +48,7 @@ export default function Users() {
             <th className="">No</th>
             <th className="">User Name</th>
             <th className="">Role</th>
-            <th className="">Action</th>
+            <th className="action">Action</th>
             {/* <th className="w-1/4 ...">Views</th> */}
           </tr>
         </thead>
@@ -62,7 +62,7 @@ export default function Users() {
                 </td>
                 <td>{user.role}</td>
                 <td>
-                  <div>
+                  <div className="action-sym">
                     <Link to={`/admin/users/${user._id}`}>
                       <MdOutlineModeEditOutline className="svg-round" />
                     </Link>
