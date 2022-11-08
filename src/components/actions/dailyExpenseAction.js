@@ -3,7 +3,7 @@ import * as actions from "./actionTypes";
 
 const apiEndPoint = process.env.REACT_APP_API_URL + "householdexpenses";
 
-export const getAllDailyExpenses = (titleName) => (dispatch,getState) => {
+export const getAllDailyExpenses = (titleName) => (dispatch, getState) => {
   axios
     .post(
       apiEndPoint + "/pfs",
@@ -57,37 +57,37 @@ export const deleteDailyExpense = (id) => (dispatch, getState) => {
     .catch((err) => console.log(err.message));
 };
 
-// export const getCurrentPeriodicExpense = (id) => (dispatch, getState) => {
-//   axios
-//     .get(apiEndPoint + `/${id}`, {
-//       headers: { "x-auth-token": getState().loginReducer.token },
-//     })
-//     .then((res) => {
-//       //   console.log(res.data);
-//       dispatch({
-//         type: actions.GET_PAYMENT_DETAILS_BY_ID,
-//         payload: {
-//           periodicPayment: res.data,
-//         },
-//       });
-//     })
-//     .catch((err) => console.log(err.message));
-// };
+export const getCurrentDailyExpense = (id) => (dispatch, getState) => {
+  axios
+    .get(apiEndPoint + `/${id}`, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((res) => {
+      //   console.log(res.data);
+      dispatch({
+        type: actions.GET_CURRENT_DAILYEXPENSE,
+        payload: {
+          dailyExpense: res.data,
+        },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};
 
-// export const updatePeriodicPayment = (data) => (dispatch, getState) => {
-//   let id = data._id;
-//   delete data._id;
-//   axios
-//     .put(apiEndPoint + `/${id}`, data, {
-//       headers: { "x-auth-token": getState().loginReducer.token },
-//     })
-//     .then((response) => {
-//       //   console.log(response.data);
-//       return dispatch({
-//         type: actions.UPDATE_PAYMENT_DETAILS,
-//         payload: { periodicPayment: response.data },
-//       });
-//     })
-//     .catch((err) => console.log(err.message));
-//   //   console.log(user);
-// };
+export const updateDaliyExpense = (data) => (dispatch, getState) => {
+  let id = data._id;
+  delete data._id;
+  axios
+    .put(apiEndPoint + `/${id}`, data, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((response) => {
+      //   console.log(response.data);
+      return dispatch({
+        type: actions.UPDATE_DAILY_EXPENSE,
+        payload: { dailyExpense: response.data },
+      });
+    })
+    .catch((err) => console.log(err.message));
+  //   console.log(user);
+};

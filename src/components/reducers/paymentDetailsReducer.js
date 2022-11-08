@@ -33,17 +33,17 @@ export const paymentDetailsReducer = (
         paymentDetails: newArr,
       };
 
-    // case actions.DELETE_MEMBER:
-    //   console.log(action.payload.deleteMember._id);
-    //   const newArr = state.members.filter((e) => {
-    //     return e._id !== action.payload.deleteMember._id;
-    //   });
-    //   //   console.log(newArr);
+    case actions.DELETE_PAYMENT_DETAIL:
+      console.log(action.payload.deleteMember._id);
+      const delnewArr = state.paymentDetails.filter((e) => {
+        return e._id !== action.payload.periodicPayment._id;
+      });
+      //   console.log(newArr);
 
-    //   return {
-    //     ...state,
-    //     members: newArr,
-    //   };
+      return {
+        ...state,
+        paymentDetails: delnewArr,
+      };
 
     default:
       return state;

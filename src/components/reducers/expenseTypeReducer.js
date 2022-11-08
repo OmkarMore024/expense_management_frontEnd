@@ -6,12 +6,12 @@ export const expenseTypeReducer = (
 ) => {
   switch (action.type) {
     case actions.GET_EXPENSE_TYPES:
-      console.log("checking", action.payload.expenses);
+      // console.log("checking", action.payload.expenses);
       return { ...state, expenses: action.payload.expenses };
 
     case actions.GET_EXPENSE_TYPE_BY_ID:
       // console.log("checking", action.payload.expenses);
-      return { ...state, currentExpense:{ ...action.payload.currentExpense} };
+      return { ...state, currentExpense: { ...action.payload.currentExpense } };
 
     case actions.ADD_EXPENSE_TYPE:
       return {

@@ -34,7 +34,9 @@ import EditPeriodicPayment from "./components/databaseComp/editPeriodicPayment";
 import UpdatePeriodicPayment, {
   periodicPaymentLoader,
 } from "./components/databaseComp/updatePeriodicPayment";
-import EditDailyExpenses from "./components/databaseComp/addDailyExpenses";
+import EditDailyExpenses, {
+  dailyExpenseLoader,
+} from "./components/databaseComp/addDailyExpenses";
 import ResetPassword from "./components/pages/resetPassword";
 import ForgetPassword from "./components/pages/forgetPassword";
 
@@ -94,8 +96,14 @@ const router = createBrowserRouter([
             path: "dailyexpense/adddailyexpense",
             element: <EditDailyExpenses />,
           },
+          {
+            path: "dailyexpense/:dailyExpenseId",
+            element: <EditDailyExpenses />,
+            loader: dailyExpenseLoader,
+          },
           { path: "members", element: <Members /> },
           { path: "members/addmember", element: <EditMember /> },
+
           { path: "households", element: <HouseHold /> },
           { path: "households/addhousehold", element: <EditHouseHold /> },
           {
@@ -121,6 +129,11 @@ const router = createBrowserRouter([
           {
             path: "dailyexpense/adddailyexpense",
             element: <EditDailyExpenses />,
+          },
+          {
+            path: "dailyexpense/:dailyExpenseId",
+            element: <EditDailyExpenses />,
+            loader: dailyExpenseLoader,
           },
         ],
       },

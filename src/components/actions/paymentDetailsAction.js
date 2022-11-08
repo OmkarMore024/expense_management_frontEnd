@@ -73,3 +73,21 @@ export const updatePeriodicPayment = (data) => (dispatch, getState) => {
     .catch((err) => console.log(err.message));
   //   console.log(user);
 };
+
+export const deletePeriodicPayment = (id) => (dispatch, getState) => {
+  // let id = data._id;
+  // delete data._id;
+  axios
+    .delete(apiEndPoint + `/${id}`, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((response) => {
+      //   console.log(response.data);
+      return dispatch({
+        type: actions.DELETE_PAYMENT_DETAIL,
+        payload: { periodicPayment: response.data },
+      });
+    })
+    .catch((err) => console.log(err.message));
+  //   console.log(user);
+};

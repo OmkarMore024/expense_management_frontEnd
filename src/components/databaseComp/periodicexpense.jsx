@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 import { MdAddCircle } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
-import { getAllPeriodicPayment } from "../actions/paymentDetailsAction";
+import {
+  deletePeriodicPayment,
+  getAllPeriodicPayment,
+} from "../actions/paymentDetailsAction";
 import { getHouseHoldByMemberid } from "../actions/membersAction";
 import { HiOutlineSearch } from "react-icons/hi";
 // import { type } from "@testing-library/user-event/dist/type";
@@ -46,14 +49,14 @@ export default function PeriodicExpense() {
 
   const funDateSeacrh = (newArr) => {
     let dateArr = [];
-    console.log("in fucntion of date");
+    // console.log("in function of date");
     if (lastDate) {
       newArr.map((pd) => {
         if (pd.paymentDetails.length !== 0) {
           let mydate = new Date(
             pd.paymentDetails[pd.paymentDetails.length - 1].date
           );
-          console.log(new Date(Date.now()) >= mydate && mydate >= lastDate);
+          // console.log(new Date(Date.now()) >= mydate && mydate >= lastDate);
           if (new Date(Date.now()) >= mydate && mydate >= lastDate)
             dateArr.push(pd);
         }
@@ -88,9 +91,8 @@ export default function PeriodicExpense() {
   }
   getHouseHoldInFrontEnd();
 
-  // funDateSeacrh(newArr);
-
   const handleDelete = (id) => {
+    dispatch(deletePeriodicPayment(id));
     // dispatch(deleteHouseHoldMember(id));
   };
 
@@ -104,7 +106,7 @@ export default function PeriodicExpense() {
     //   typeof new Date(Date.now() - target.value * 86400000).toISOString()
     // );
     if (target.value !== "all") {
-      console.log(target.value);
+      // console.log(target.value);
       setLastDate(new Date(Date.now() - target.value * 86400000));
     } else {
       setLastDate("");
@@ -127,28 +129,28 @@ export default function PeriodicExpense() {
 
         <div className="col-6 symDiv">
           <div className="button-flex">
-            {userInfo.role === "Primary User" ? (
-              <div className="flex justify-between">
-                <select className="filter" onChange={handleDateFilter}>
-                  <option value={"all"} key={"all"}>
-                    All Data
-                  </option>
-                  {dateFequency.map((f) => {
-                    return (
-                      <option value={f.date} key={f.title}>
-                        {f.title}
-                      </option>
-                    );
-                  })}
-                </select>
+            <div className="flex justify-between">
+              <select className="filter" onChange={handleDateFilter}>
+                <option value={"all"} key={"all"}>
+                  All Data
+                </option>
+                {dateFequency.map((f) => {
+                  return (
+                    <option value={f.date} key={f.title}>
+                      {f.title}
+                    </option>
+                  );
+                })}
+              </select>
+              {userInfo.role === "Primary User" ? (
                 <Link to="/primary-user/periodicexpense/addperiodicexpenses">
                   <MdAddCircle className="addSym my-3" />
                 </Link>
-              </div>
-            ) : (
-              <span></span>
-              // <span>Members can only Pay/update the payment</span>
-            )}
+              ) : (
+                ""
+              )}
+            </div>
+            {/* // <span>Members can only Pay/update the payment</span> */}
           </div>
         </div>
       </div>
@@ -163,7 +165,7 @@ export default function PeriodicExpense() {
               </th>
               <th className="">HouseHold</th>
               <th className="">Expense type</th>
-              <th className="">paid by</th>
+              <th className="">Description</th>
               <th className="action">Action</th>
               {/* <th className="w-1/4 ...">Views</th> */}
             </tr>
@@ -178,7 +180,8 @@ export default function PeriodicExpense() {
                   </td>
                   <td>{paymentDetail.household.name}</td>
                   <td>{paymentDetail.expensetype.name}</td>
-                  <td>{paymentDetail.paidBy.map((p) => p + ",")}</td>
+                  <td>{paymentDetail.description}</td>
+                  {/* <td>{paymentDetail.paidBy.map((p) => p + ",")}</td> */}
                   <td>
                     {userInfo.role === "Primary User" ? (
                       <div className="action-sym">

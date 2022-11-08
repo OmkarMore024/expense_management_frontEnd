@@ -52,37 +52,41 @@ export default function ExpenseType() {
           </Link>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr className="" key={"search and action"}>
-            <th className="">Expense Type</th>
-            <th className="action">Action</th>
-            {/* <th className="w-1/4 ...">Views</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((expense, index) => {
-            return (
-              <tr key={expense._id}>
-                <td>
-                  {index + 1} {expense.name}
-                </td>
-                <td>
-                  <div className="action-sym">
-                    <Link to={`/admin/expensetype/${expense._id}`}>
-                      <MdOutlineModeEditOutline className="svg-round" />
-                    </Link>
-                    <MdOutlineDelete
-                      className="svg-round"
-                      onClick={() => handleDelete(expense._id)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {expenses.length === 0 ? (
+        <div className="NoData">No Data found in Database</div>
+      ) : (
+        <table>
+          <thead>
+            <tr className="" key={"search and action"}>
+              <th className="">Expense Type</th>
+              <th className="action">Action</th>
+              {/* <th className="w-1/4 ...">Views</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {expenses.map((expense, index) => {
+              return (
+                <tr key={expense._id}>
+                  <td>
+                    {index + 1}. {expense.name}
+                  </td>
+                  <td>
+                    <div className="action-sym">
+                      <Link to={`/admin/expensetype/${expense._id}`}>
+                        <MdOutlineModeEditOutline className="svg-round" />
+                      </Link>
+                      <MdOutlineDelete
+                        className="svg-round"
+                        onClick={() => handleDelete(expense._id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

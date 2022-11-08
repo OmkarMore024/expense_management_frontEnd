@@ -63,6 +63,7 @@ export default function EditPeriodicPayment() {
       // dispatch(updateexpense(data));
       navigate("/primary-user/members");
     } else {
+      
       dispatch(addPeriodicExpense(data));
       //   console.log(data);
       navigate("/primary-user/periodicexpense");

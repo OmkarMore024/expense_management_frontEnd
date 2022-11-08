@@ -250,6 +250,7 @@ tr th {
   width: 150px;
   height: 30px;
   margin: 18px;
+  outline: none;
   border-radius: 4px;
   box-shadow: 2px 2px 2px 2px #cdc4c4;
 }
@@ -261,6 +262,19 @@ tr th {
   font-weight: 700;
   border-bottom: 2px dashed #746a6a;
 }
+.NoData {
+  display: flex;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 28px;
+  font-style: italic;
+}
+ /* {
+  background-color: #017dda;
+  color: white;
+  border-radius: 7px;
+} */
+
 
 /* .navLink {
   display: block;

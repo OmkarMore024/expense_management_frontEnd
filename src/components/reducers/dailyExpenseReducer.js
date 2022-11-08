@@ -1,6 +1,9 @@
 import * as actions from "../actions/actionTypes";
 
-export const dailyExpenseReducer = (state = { dailyExpenses: [] }, action) => {
+export const dailyExpenseReducer = (
+  state = { dailyExpenses: [], currentExpense: {} },
+  action
+) => {
   switch (action.type) {
     case actions.GET_DAILY_EXPENSES:
       return {
@@ -17,6 +20,12 @@ export const dailyExpenseReducer = (state = { dailyExpenses: [] }, action) => {
         ],
       };
 
+    case actions.GET_CURRENT_DAILYEXPENSE:
+      return {
+        ...state,
+        currentExpense: { ...action.payload.dailyExpense },
+      };
+
     case actions.DELETE_DAILY_EXPENSE:
       // console.log(action.payload.deleteExpense._id);
       const newArr = state.dailyExpenses.filter((e) => {
@@ -27,11 +36,12 @@ export const dailyExpenseReducer = (state = { dailyExpenses: [] }, action) => {
         ...state,
         dailyExpenses: newArr,
       };
-    // case actions.GET_PAYMENT_DETAILS_BY_ID:
-    //   return {
-    //     ...state,
-    //     currentPayment: { ...action.payload.periodicPayment },
-    //   };
+    case actions.UPDATE_DAILY_EXPENSE:
+      const updatedArr = [...state.dailyExpenses];
+      return {
+        ...state,
+        dailyExpenses: updatedArr,
+      };
 
     default:
       return state;

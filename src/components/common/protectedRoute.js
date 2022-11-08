@@ -9,7 +9,7 @@ export default function Protected(props) {
     console.log("check here the token:", token);
     navigate("/login");
   } else {
-    console.log("in protectedd");
+    // console.log("in protectedd");
     return props.compo;
   }
 }

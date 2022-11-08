@@ -2,10 +2,11 @@ import { MdOutlineModeEditOutline, MdOutlineDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { MdAddCircle } from "react-icons/md";
 import { deleteUser, getAllUsers } from "../actions/usersAction";
 import { Link } from "react-router-dom";
 import { FaUserCheck, FaUserTimes } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { BsFillCircleFill } from "react-icons/bs";
 
 export default function Users() {
   const users = useSelector((state) => state.userReducer.users);
@@ -45,7 +46,9 @@ export default function Users() {
       <table>
         <thead>
           <tr className="" key={"search and action"}>
-            <th className="">No</th>
+            <th className="" scope="">
+              No
+            </th>
             <th className="">User Name</th>
             <th className="">Role</th>
             <th className="action">Action</th>
@@ -58,6 +61,11 @@ export default function Users() {
               <tr key={user._id}>
                 <td>{index + 1} </td>
                 <td>
+                  {user.isActive ? (
+                    <BsFillCircleFill className="inline-block text-success w-2" />
+                  ) : (
+                    <BsFillCircleFill className="inline-block text-danger w-2" />
+                  )}{" "}
                   {user.firstName} {user.lastName}
                 </td>
                 <td>{user.role}</td>

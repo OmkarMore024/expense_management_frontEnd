@@ -12,12 +12,16 @@ import {
   updatePeriodicPayment,
 } from "../actions/paymentDetailsAction";
 import { getPrimarysHouseHolds } from "../actions/houseHoldAction";
-import { addDaliyExpense } from "../actions/dailyExpenseAction";
+import {
+  addDaliyExpense,
+  getCurrentDailyExpense,
+  updateDaliyExpense,
+} from "../actions/dailyExpenseAction";
 import { getHouseHoldByMemberid } from "../actions/membersAction";
 
-export function periodicPaymentLoader({ params }) {
-  const periodicPaymentId = params.periodicPaymentId;
-  return periodicPaymentId;
+export function dailyExpenseLoader({ params }) {
+  const dailyExpenseId = params.dailyExpenseId;
+  return dailyExpenseId;
 }
 
 const schema = yup.object().shape({
@@ -46,23 +50,22 @@ export default function EditDailyExpenses() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const periodicPayment = useSelector(
-    (state) => state.paymentDetailsReducer.currentPayment
+  const dailyExpense = useSelector(
+    (state) => state.dailyExpenseReducer.currentExpense
   );
   const households = useSelector((state) => state.houseHoldReducer.houseHolds);
   const expenses = useSelector((state) => state.expenseTypeReducer.expenses);
-  const members = useSelector((state) => state.userReducer.users);
+
   let memberHouseHold = useSelector((state) => state.memberReducer.houseHolds);
 
   const userInfo = useSelector((state) => state.loginReducer.userInfo);
 
-  const periodicPaymentId = useLoaderData();
-  console.log(periodicPaymentId);
+  const dailyExpenseId = useLoaderData();
+  // console.log(dailyExpenseId);
   let link;
   useEffect(() => {
     // dispatch(getAllMembers());
-    // dispatch(getAllUsers());
-    // dispatch(getPrimarysHouseHolds(userInfo._id));
+    // dispatch(getPrimarysHouseHolds(dailyExpenseId));
     dispatch(getAllExpenseTypes());
     if (userInfo.role === "Member") {
       link = "member";
@@ -71,7 +74,8 @@ export default function EditDailyExpenses() {
       link = "primary-user";
       dispatch(getPrimarysHouseHolds(userInfo._id));
     }
-  }, []);
+  }, [dailyExpense._id]);
+
   let newArr = [];
   function getDailyExpensesInFrontEnd() {
     link = "member";
@@ -88,20 +92,20 @@ export default function EditDailyExpenses() {
   }
   getDailyExpensesInFrontEnd();
 
-//   console.log(newArr);
-
   useEffect(() => {
-    if (!periodicPaymentId) return;
-    // dispatch(getCurrentPeriodicExpense(periodicPaymentId));
-
-    setValue("dueDate", periodicPayment.dueDate);
-    // setValue("amount", periodicPayment.paymentDetails.amount);
-    // setValue("method", periodicPayment.paymentDetails.method);
-    // setValue("date", periodicPayment.paymentDetails.date);
-    // setValue("paidBy", periodicPayment.paidBy);
-    // setValue("paidThrough", periodicPayment.paidThrough);
-    setValue("_id", periodicPayment._id);
-  }, [periodicPayment._id]);
+    if (!dailyExpenseId) return;
+    dispatch(getCurrentDailyExpense(dailyExpenseId));
+    // console.log(dailyExpense);
+    setValue("description", dailyExpense.description);
+    setValue("amount", dailyExpense.paymentDetails.amount);
+    setValue("method", dailyExpense.paymentDetails.method);
+    setValue("date", dailyExpense.paymentDetails.date);
+    setValue("paidBy", dailyExpense.paidBy);
+    setValue("paidThrough", dailyExpense.paidThrough);
+    setValue("householdId", dailyExpense.household._id);
+    setValue("expensetypeId", dailyExpense.expensetype._id);
+    setValue("_id", dailyExpense._id);
+  }, [dailyExpense._id]);
 
   let onSubmitData = (data) => {
     data.paymentDetails = {
@@ -113,15 +117,15 @@ export default function EditDailyExpenses() {
     delete data.date;
     delete data.method;
     console.log(data);
-    if (data._id) {
+    if (dailyExpenseId) {
       console.log("update");
-      dispatch(updatePeriodicPayment(data));
-      navigate("/primary-user/dailyexpense");
+      dispatch(updateDaliyExpense(data));
+      navigate(`/${link}/dailyexpense`);
     } else {
       console.log("add");
       dispatch(addDaliyExpense(data));
-        navigate(`/${link}/dailyexpense`);
-    //   navigate("/primary-user/dailyexpense");
+      navigate(`/${link}/dailyexpense`);
+      //   navigate("/primary-user/dailyexpense");
     }
   };
   return (

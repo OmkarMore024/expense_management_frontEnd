@@ -66,7 +66,7 @@ export default function EditExpenseType() {
   };
   return (
     <div>
-      <div className="household justify-content-center align-items-center">
+      <div className="household justify-content-center align-items-center w-">
         <form onSubmit={handleSubmit(onSubmitData)}>
           <h4 className="household-title">Add Expense type</h4>
 

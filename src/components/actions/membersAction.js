@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actions from "./actionTypes";
 
-const apiEndPoint = process.env.REACT_APP_API_URL+"householdmembers";
+const apiEndPoint = process.env.REACT_APP_API_URL + "householdmembers";
 
 export const getAllMembers = () => (dispatch) => {
   axios
@@ -104,6 +104,23 @@ export const getHouseHoldByMemberid = (id) => (dispatch, getState) => {
         type: actions.GET_HOUSEHOLD_MEMBER_BY_ID,
         payload: {
           houseHolds: res.data,
+        },
+      });
+    })
+    .catch((err) => console.log(err.message));
+};
+
+export const getCurrentHouseholdMember = (id) => (dispatch, getState) => {
+  axios
+    .get(apiEndPoint + `/${id}`, {
+      headers: { "x-auth-token": getState().loginReducer.token },
+    })
+    .then((res) => {
+      //   console.log(res.data);
+      dispatch({
+        type: actions.GET_CURRENT_HOUSEHOLD_MEMBER,
+        payload: {
+          curretMember: res.data,
         },
       });
     })

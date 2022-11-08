@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Login() {
   const schema = yup.object().shape({
     email: yup.string().min(5).max(255).email().required(),
-    password: yup.string().min(6).max(1024).required("Enter valid password"),
+    password: yup.string().min(5).max(1024).required("Enter valid password"),
   });
 
   const {

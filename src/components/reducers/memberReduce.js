@@ -1,7 +1,7 @@
 import * as actions from "../actions/actionTypes";
 
 export const memberReducer = (
-  state = { members: [], houseHolds: [] },
+  state = { members: [], houseHolds: [], currentMember: {} },
   action
 ) => {
   switch (action.type) {
@@ -35,6 +35,12 @@ export const memberReducer = (
       return {
         ...state,
         members: newArr,
+      };
+
+    case actions.GET_CURRENT_DAILYEXPENSE:
+      return {
+        ...state,
+        currentMember: { ...action.payload.currentMember },
       };
     //this case is gor member dashboard
     case actions.GET_HOUSEHOLD_MEMBER_BY_ID:

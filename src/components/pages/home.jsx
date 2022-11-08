@@ -3,7 +3,7 @@ export default function Home() {
     <div className="h-[calc(100vh-72px)] w-full  flex flex-col justify-center items-center">
       <span className="text-4xl text-center font-semibold">
         Now managing your{" "}
-        <span className="text-green-500 font-bold">Expenses</span> becomes
+        <span className="text-blue-600 font-bold">Expenses</span> becomes
         <br /> really easy!
       </span>
       <br />

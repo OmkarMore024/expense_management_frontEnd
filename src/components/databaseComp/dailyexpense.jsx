@@ -51,7 +51,7 @@ export default function DailyExpense() {
       households.map((hh) => {
         // console.log(dailyExpenses);
         dailyExpenses.forEach((pd) => {
-          if (hh._id === pd.household._id) {
+          if (hh._id === pd.x._id) {
             // console.log(pd);
             newArr.push(pd);
           }

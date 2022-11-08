@@ -5,9 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Navigate, useLoaderData, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addHouseHold,
-} from "../actions/houseHoldAction";
+import { addHouseHold } from "../actions/houseHoldAction";
 import { getCurrentUser, updateUser } from "../actions/usersAction";
 
 export function userLoader({ params }) {
@@ -64,7 +62,7 @@ export default function EditUser() {
   let onSubmitData = (data) => {
     console.log(data);
     if (data._id) {
-      data.updatedBy = "Admin";
+      data.updatedBy = userInfo._id;
       data.password = user.password;
       console.log("update");
       dispatch(updateUser(data));
@@ -162,7 +160,7 @@ export default function EditUser() {
               <div className="col-6">
                 <div className="isActive-block">
                   <input
-                    className="form-check-input  m-2 bar"
+                    className="form-check-input  m-2  bar"
                     type="checkbox"
                     // value={true}
                     {...register("isActive")}
